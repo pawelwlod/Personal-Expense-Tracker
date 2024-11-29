@@ -1,6 +1,7 @@
 # expense_manager.py
 '''Expense Manager'''
 
+from tabulate import tabulate
 from data_manager import DataManager
 dm = DataManager()
 
@@ -8,7 +9,7 @@ class ExpenseManager:
     '''Personal Expense Tracker functions.'''
     def __init__(self):
         '''Initialise ExpenseManager.'''
-        self.expenses = {}
+        self.expenses = dm.load_data({})
     
     def add_expense(self, amount, category, date):
         '''Adds an expense to the tracker.'''
@@ -27,3 +28,7 @@ class ExpenseManager:
                 print(f"Expense amount must be a positive number!")
         else:
             print("Follow the date format: YYYY-MM-DD")
+    
+    def display_expenses(self):
+        '''Displays all expenses in a table-like form.'''
+        print(tabulate(self.expenses.items(), headers=['Date', 'Amount/Category', 'Category'], tablefmt="fancy_grid"))
