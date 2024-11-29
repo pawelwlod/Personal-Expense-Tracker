@@ -1,6 +1,9 @@
 # expense_manager.py
 '''Expense Manager'''
 
+from data_manager import DataManager
+dm = DataManager()
+
 class ExpenseManager:
     '''Personal Expense Tracker functions.'''
     def __init__(self):
@@ -15,8 +18,9 @@ class ExpenseManager:
             if float(amount) > 0.00:
                 if category in categories:
                     self.expenses[date] = {"amount": amount, "category": category}
-                    
-                    print(f"Added new expense for {date}: £{amount} , {category}")
+                    dm.save_data(self.expenses)
+
+                    print(f"\nAdded new expense for {date}: £{amount} , {category}")
                 else:
                     print(f"Category {category} cant be selected.")
             else:
