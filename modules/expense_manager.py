@@ -31,4 +31,4 @@ class ExpenseManager:
     
     def display_expenses(self):
         '''Displays all expenses in a table-like form.'''
-        print(tabulate(self.expenses.items(), headers=['Date', 'Amount/Category', 'Category'], tablefmt="fancy_grid"))
+        return tabulate(self.expenses.items(), headers=['Date', 'Amount/Category', 'Category'], tablefmt="fancy_grid")
