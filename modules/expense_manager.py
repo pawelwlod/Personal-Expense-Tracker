@@ -2,8 +2,9 @@
 '''Expense Manager'''
 
 from tabulate import tabulate
-from data_manager import DataManager
-dm = DataManager()
+from dateutil import parser
+from modules import data_manager
+dm = data_manager.DataManager()
 
 class ExpenseManager:
     '''Personal Expense Tracker functions.'''
@@ -13,22 +14,30 @@ class ExpenseManager:
     
     def add_expense(self, amount, category, date):
         '''Adds an expense to the tracker.'''
-        categories = ['Food', 'Transport', 'Games', 'Other']
+        categories = ['food', 'transport', 'games', 'other']
 
-        if len(date) == 10:
-            if float(amount) > 0.00:
-                if category in categories:
-                    self.expenses[date] = {"amount": amount, "category": category}
-                    dm.save_data(self.expenses)
+        try:
+            if parser.parse(date):
+                if float(amount) > 0.00:
+                    if category.lower() in categories:
+                        self.expenses[(len(self.expenses))] = {"date": date, "amount": float(amount), "category": category}
+                        dm.save_data(self.expenses)
 
-                    print(f"\nAdded new expense for {date}: £{amount} , {category}")
+                        print(f"\nAdded new expense for {date}: £{float(amount)} , {category}")
+                    else:
+                        print(f"Category {category} cant be selected.")
                 else:
-                    print(f"Category {category} cant be selected.")
+                    print(f"Expense amount must be a positive number!")
             else:
-                print(f"Expense amount must be a positive number!")
-        else:
-            print("Follow the date format: YYYY-MM-DD")
+                print("Follow the date format: YYYY-MM-DD")
+        except parser.ParserError:
+            print("Follow the format: YYYY-MM-DD !")
+        except Exception as e:
+            print(f"Error in add_expense: {str(e)}")
     
     def display_expenses(self):
         '''Displays all expenses in a table-like form.'''
-        return tabulate(self.expenses.items(), headers=['Date', 'Amount/Category', 'Category'], tablefmt="fancy_grid")
+        try:
+            return tabulate(self.expenses.values(), headers="keys", tablefmt="fancy_grid")
+        except Exception as e:
+            print(f"Error in display_expenses: {str(e)}")

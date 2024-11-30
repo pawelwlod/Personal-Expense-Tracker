@@ -10,8 +10,11 @@ class DataManager:
     
     def save_data(self, data):
         '''Save data to file'''
-        with open(self.file_name, 'w') as file:
-            json.dump(data, file, indent=4, separators=(',', ': '))
+        try:
+            with open(self.file_name, 'w') as file:
+                json.dump(data, file, indent=4, separators=(',', ': '))
+        except Exception as e:
+            print(f"Error while saving expenses: {str(e)}")
     
     def load_data(self, default):
         '''Load data from file'''
