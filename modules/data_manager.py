@@ -23,3 +23,5 @@ class DataManager:
                 return json.load(file)
         except (FileNotFoundError, json.decoder.JSONDecodeError):
             return default
+        except Exception as e:
+            print(f"Error while loading expenses: {str(e)}")

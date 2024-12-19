@@ -18,16 +18,22 @@ class ExpenseManager:
 
         try:
             if parser.parse(date):
-                if float(amount) > 0.00:
-                    if category.lower() in categories:
-                        self.expenses[(len(self.expenses))] = {"date": date, "amount": float(amount), "category": category}
-                        dm.save_data(self.expenses)
+                if amount:     
+                    if float(amount) > 0.00:
+                        if category:
+                            if category.lower() in categories:
+                                self.expenses[(len(self.expenses))] = {"date": date, "amount": float(amount), "category": category}
+                                dm.save_data(self.expenses)
 
-                        print(f"\nAdded new expense for {date}: £{float(amount)} , {category}")
+                                print(f"\nAdded new expense for {date}: £{float(amount)} , {category}")
+                            else:
+                                print(f"Category {category} cant be selected.")
+                        else:
+                            print("Expense category must be inputted!")
                     else:
-                        print(f"Category {category} cant be selected.")
+                        print("Expense amount must be a positive number!")
                 else:
-                    print(f"Expense amount must be a positive number!")
+                    print("Expense amount must be inputted!")
             else:
                 print("Follow the date format: YYYY-MM-DD")
         except parser.ParserError:
