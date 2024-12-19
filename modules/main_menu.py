@@ -4,8 +4,9 @@
 import time
 import os
 import pyfiglet
-from modules import expense_manager
+from modules import expense_manager, data_manager
 em = expense_manager.ExpenseManager()
+dm = data_manager.DataManager()
 
 def main_menu(is_online):
     '''The main menu for the Personal Expense Tracker.'''
@@ -50,5 +51,8 @@ def exit(is_online):
     '''Exits Expense Tracker.'''
     
     print("Exiting...")
+    dm.save_data(em.expenses)
+    print("\nExpenses Saved!")
+
     is_online = False
     return is_online 

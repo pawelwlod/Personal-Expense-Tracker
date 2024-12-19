@@ -1,37 +1,17 @@
 {
     "0": {
-        "date": "2024-11-30",
-        "amount": 5.5,
-        "category": "games"
+        "date": "2024-12-19",
+        "amount": 5.0,
+        "category": "Food"
     },
     "1": {
-        "date": "1234-12-12",
-        "amount": 6.0,
-        "category": "other"
+        "date": "2024-12-24",
+        "amount": 56.5,
+        "category": "Games"
     },
     "2": {
         "date": "2024-12-21",
-        "amount": 7.0,
-        "category": "food"
-    },
-    "3": {
-        "date": "2023-7-8",
-        "amount": 45.1,
-        "category": "transport"
-    },
-    "4": {
-        "date": "2013-4-5",
-        "amount": "5.6",
-        "category": "other"
-    },
-    "5": {
-        "date": "1023-12-12",
-        "amount": 5.7,
-        "category": "other"
-    },
-    "6": {
-        "date": "2024-5-6",
-        "amount": 10.0,
-        "category": "games"
+        "amount": 100.0,
+        "category": "Other"
     }
 }
