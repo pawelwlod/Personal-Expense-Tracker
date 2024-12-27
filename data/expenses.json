@@ -18,5 +18,10 @@
         "date": "2024-12-10",
         "amount": 12.3,
         "category": "Transport"
+    },
+    "4": {
+        "date": "2024-12-27",
+        "amount": 56.0,
+        "category": "Fine"
     }
 }

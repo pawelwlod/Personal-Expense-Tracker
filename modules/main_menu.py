@@ -27,7 +27,7 @@ def main_menu(is_online):
                     amount = str(input("Enter expense amount (format: £0.00): "))
                     if amount == 'exit':
                         return exit(is_online)
-                    category = str(input("Enter category (Food, Transport, Games, Other): "))
+                    category = str(input(f"Enter category ({' '.join(str(e.title()) for e in em.categories)}): "))
                     if category == 'exit':
                         return exit(is_online)
 

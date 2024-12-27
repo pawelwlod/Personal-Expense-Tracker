@@ -11,17 +11,18 @@ class ExpenseManager:
     def __init__(self):
         '''Initialise ExpenseManager.'''
         self.expenses = dm.load_data({})
+        self.categories = ['food', 'transport', 'entertainments', 'utilities', 'custom']
     
     def add_expense(self, amount, category, date):
         '''Adds an expense to the tracker.'''
-        categories = ['food', 'transport', 'games', 'other']
-
         try:
             if parser.parse(date):
                 if amount:     
                     if float(amount) > 0.00:
                         if category:
-                            if category.lower() in categories:
+                            if category.lower() in self.categories:
+                                if category.lower() == 'custom':
+                                    category = str(input("Enter custom category: ")).title()
                                 self.expenses[(len(self.expenses))] = {"date": date, "amount": float(amount), "category": category}
                                 dm.save_data(self.expenses)
 
