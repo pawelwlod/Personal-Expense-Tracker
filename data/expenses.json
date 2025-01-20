@@ -23,5 +23,10 @@
         "date": "2024-12-27",
         "amount": 56.0,
         "category": "Fine"
+    },
+    "5": {
+        "date": "2025-01-12",
+        "amount": 56.0,
+        "category": "Food"
     }
 }

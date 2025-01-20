@@ -25,3 +25,13 @@ class DataManager:
             return default
         except Exception as e:
             print(f"Error while loading expenses: {str(e)}")
+    
+    def filter_data(self, list, filter):
+        try:
+            filtered_list = {}
+            for index, expense in list.items():    
+                if expense['category'] == filter.title():
+                    filtered_list[index] = expense
+            return filtered_list
+        except Exception as e:
+            print(f"Error while filtering expenses: {str(e)}")

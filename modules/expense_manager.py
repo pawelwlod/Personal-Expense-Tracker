@@ -23,7 +23,7 @@ class ExpenseManager:
                             if category.lower() in self.categories:
                                 if category.lower() == 'custom':
                                     category = str(input("Enter custom category: ")).title()
-                                self.expenses[(len(self.expenses))] = {"date": date, "amount": float(amount), "category": category}
+                                self.expenses[(len(self.expenses))] = {"date": date, "amount": float(amount), "category": category.title()}
                                 dm.save_data(self.expenses)
 
                                 print(f"\nAdded new expense for {date}: £{float(amount)} , {category}")
@@ -43,8 +43,14 @@ class ExpenseManager:
             print(f"Error in add_expense: {str(e)}")
     
     def display_expenses(self):
-        '''Displays all expenses in a table-like form.'''
+        '''Displays all (with optional filters) expenses in a table-like form.'''
         try:
-            return tabulate(self.expenses.values(), headers="keys", tablefmt="fancy_grid")
+            filters = str(input("Select a filter (Category, Date Range, skip for no filter): "))
+            if filters.lower() == "category":
+                filter_category = str(input(f"Filter by category: ({' '.join(str(e.title()) for e in self.categories)}) "))
+                filter_list = dm.filter_data(self.expenses, filter_category)
+                return tabulate(filter_list.values(), headers="keys", tablefmt="fancy_grid")
+            else:
+                return tabulate(self.expenses.values(), headers="keys", tablefmt="fancy_grid")
         except Exception as e:
             print(f"Error in display_expenses: {str(e)}")

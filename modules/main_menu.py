@@ -4,6 +4,7 @@
 import time
 import os
 import pyfiglet
+from colorama import Fore
 from modules import expense_manager, data_manager
 em = expense_manager.ExpenseManager()
 dm = data_manager.DataManager()
@@ -13,7 +14,8 @@ def main_menu(is_online):
     while True:
         try:
             os.system('cls' if os.name == 'nt' else 'clear')
-            print(pyfiglet.figlet_format("Personal Expense Tracker"))
+            title = pyfiglet.figlet_format("Personal Expense Tracker")
+            print(Fore.BLUE+title)
 
             print("\n1. Add Expense\n2. Display Expenses\n3. Exit")
             user_input = str(input("Choose an option: "))
