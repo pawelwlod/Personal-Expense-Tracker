@@ -27,13 +27,20 @@ class DataManager:
         except Exception as e:
             print(f"Error while loading expenses: {str(e)}")
     
-    def filter_category(self, list, filter_category):
-        '''Filters expenses by category'''
+    def filter_data(self, list, type, filter=None, start_amount=None, end_amount=None):
+        '''Filters expenses by either a category or amount range.'''
         try:
             filtered_list = {}
-            for index, expense in list.items():    
-                if expense['category'] == filter_category.title():
-                    filtered_list[index] = expense
+            for index, expense in list.items():
+                if type == "category":
+                    if expense['category'] == filter.title():
+                        filtered_list[index] = expense
+                else:
+                    if start_amount < end_amount:
+                        if expense['amount'] >= start_amount and expense['amount'] <= end_amount:
+                            filtered_list[index] = expense
+                    else:
+                        print("Start amount cannot be bigger than end amount.")
             return filtered_list
         except Exception as e:
             print(f"Error while filtering expenses by category: {str(e)}")

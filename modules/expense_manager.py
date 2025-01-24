@@ -43,10 +43,10 @@ class ExpenseManager:
     def display_expenses(self):
         '''Displays all (with optional filters) expenses in a table-like form.'''
         try:
-            filters = str(input("Select a filter (Category, Date, skip for no filter): "))
+            filters = str(input("Select a filter (Category, Date, Amount, skip for no filter): "))
             if filters.lower() == "category":
                 filter_category = str(input(f"Filter by category: ({' '.join(str(e.title()) for e in self.categories)}) "))
-                filter_list = dm.filter_category(self.expenses, filter_category)
+                filter_list = dm.filter_data(self.expenses, "category", filter=filter_category)
                 if not filter_list:
                     print("\nNo expenses matching the category.")
             
@@ -58,6 +58,15 @@ class ExpenseManager:
                 filter_list = dtm.filter_date_range(self.expenses, start_date, end_date)
                 if not filter_list:
                     print("\nNo expenses in the date range.")
+            
+            elif filters.lower() == "amount":
+                start_amount, end_amount = float(input("Enter start amount: ")), float(input("Enter end amount: "))
+                if start_amount is None or end_amount is None:
+                    print("\nInvalid amount range. Please try again.")
+                    return
+                filter_list = dm.filter_data(self.expenses, "amount", start_amount=start_amount, end_amount=end_amount)
+                if not filter_list:
+                    print("\nNo expenses matching the amount.")
             
             else:
                  filter_list = self.expenses
