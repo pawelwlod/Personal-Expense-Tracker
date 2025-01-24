@@ -5,6 +5,7 @@ import time
 import os
 import pyfiglet
 from colorama import Fore
+from datetime import datetime
 from modules import expense_manager, data_manager
 em = expense_manager.ExpenseManager()
 dm = data_manager.DataManager()
@@ -23,9 +24,13 @@ def main_menu(is_online):
             if user_input:
                 if (user_input == '1') or (user_input.lower() == 'add expense'):
                     print("\nSend 'exit' in any of the fields to cancel.")
-                    date = str(input("Enter date (YYYY-MM-DD): "))
+                    date = str(input("Enter date (YYYY-MM-DD): ")).strip()
                     if date == 'exit':
-                        return exit(is_online) 
+                        return exit(is_online)
+                    try:
+                        parsed_date = datetime.strptime(date, "%Y-%m-%d").date()
+                    except ValueError:
+                        print("Invalid date format. Please enter the date in YYYY-MM-DD format or type 'exit' to return.")
                     amount = str(input("Enter expense amount (format: £0.00): "))
                     if amount == 'exit':
                         return exit(is_online)
@@ -33,7 +38,7 @@ def main_menu(is_online):
                     if category == 'exit':
                         return exit(is_online)
 
-                    em.add_expense(amount=amount, category=category, date=date)
+                    em.add_expense(amount=amount, category=category, date=str(parsed_date))
                     time.sleep(3)
 
                 elif (user_input == '2') or (user_input.lower() == 'display expenses'):

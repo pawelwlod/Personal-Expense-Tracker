@@ -1,32 +1,37 @@
 {
     "0": {
-        "date": "2024-12-19",
-        "amount": 5.0,
+        "date": "2020-05-01",
+        "amount": 56.0,
         "category": "Food"
     },
     "1": {
-        "date": "2024-12-24",
-        "amount": 56.5,
-        "category": "Games"
-    },
-    "2": {
-        "date": "2024-12-21",
-        "amount": 100.0,
-        "category": "Other"
-    },
-    "3": {
-        "date": "2024-12-10",
-        "amount": 12.3,
+        "date": "2020-05-10",
+        "amount": 10.0,
         "category": "Transport"
     },
+    "2": {
+        "date": "2021-04-12",
+        "amount": 5.0,
+        "category": "School"
+    },
+    "3": {
+        "date": "2021-07-20",
+        "amount": 2.5,
+        "category": "Utilities"
+    },
     "4": {
-        "date": "2024-12-27",
-        "amount": 56.0,
-        "category": "Fine"
+        "date": "2025-01-10",
+        "amount": 5.67,
+        "category": "Transport"
     },
     "5": {
-        "date": "2025-01-12",
-        "amount": 56.0,
+        "date": "2022-07-28",
+        "amount": 0.5,
+        "category": "Utilities"
+    },
+    "6": {
+        "date": "2023-06-14",
+        "amount": 200.0,
         "category": "Food"
     }
 }

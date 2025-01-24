@@ -5,6 +5,7 @@ from tabulate import tabulate
 from dateutil import parser
 from modules import data_manager
 dm = data_manager.DataManager()
+dtm = data_manager.DateManager()
 
 class ExpenseManager:
     '''Personal Expense Tracker functions.'''
@@ -16,27 +17,24 @@ class ExpenseManager:
     def add_expense(self, amount, category, date):
         '''Adds an expense to the tracker.'''
         try:
-            if parser.parse(date):
-                if amount:     
-                    if float(amount) > 0.00:
-                        if category:
-                            if category.lower() in self.categories:
-                                if category.lower() == 'custom':
-                                    category = str(input("Enter custom category: ")).title()
-                                self.expenses[(len(self.expenses))] = {"date": date, "amount": float(amount), "category": category.title()}
-                                dm.save_data(self.expenses)
+            if amount:     
+                if float(amount) > 0.00:
+                    if category:
+                        if category.lower() in self.categories:
+                            if category.lower() == 'custom':
+                                category = str(input("Enter custom category: ")).title()
+                            self.expenses[(len(self.expenses))] = {"date": date, "amount": float(amount), "category": category.title()}
+                            dm.save_data(self.expenses)
 
-                                print(f"\nAdded new expense for {date}: £{float(amount)} , {category}")
-                            else:
-                                print(f"Category {category} cant be selected.")
+                            print(f"\nAdded new expense for {date}: £{float(amount)} , {category.title()}")
                         else:
-                            print("Expense category must be inputted!")
+                            print(f"Category {category} cant be selected.")
                     else:
-                        print("Expense amount must be a positive number!")
+                        print("Expense category must be inputted!")
                 else:
-                    print("Expense amount must be inputted!")
+                    print("Expense amount must be a positive number!")
             else:
-                print("Follow the date format: YYYY-MM-DD")
+                print("Expense amount must be inputted!")
         except parser.ParserError:
             print("Follow the format: YYYY-MM-DD !")
         except Exception as e:
@@ -45,12 +43,25 @@ class ExpenseManager:
     def display_expenses(self):
         '''Displays all (with optional filters) expenses in a table-like form.'''
         try:
-            filters = str(input("Select a filter (Category, Date Range, skip for no filter): "))
+            filters = str(input("Select a filter (Category, Date, skip for no filter): "))
             if filters.lower() == "category":
                 filter_category = str(input(f"Filter by category: ({' '.join(str(e.title()) for e in self.categories)}) "))
-                filter_list = dm.filter_data(self.expenses, filter_category)
-                return tabulate(filter_list.values(), headers="keys", tablefmt="fancy_grid")
+                filter_list = dm.filter_category(self.expenses, filter_category)
+                if not filter_list:
+                    print("\nNo expenses matching the category.")
+            
+            elif filters.lower() == "date":
+                start_date, end_date = dtm.validate_date_range(input("Start date (YYYY-MM-DD): "), input("End date (YYYY-MM-DD): "))
+                if start_date is None or end_date is None:
+                    print("\nInvalid date range. Please try again.")
+                    return
+                filter_list = dtm.filter_date_range(self.expenses, start_date, end_date)
+                if not filter_list:
+                    print("\nNo expenses in the date range.")
+            
             else:
-                return tabulate(self.expenses.values(), headers="keys", tablefmt="fancy_grid")
+                 filter_list = self.expenses
+
+            return tabulate(filter_list.values(), headers="keys", tablefmt="fancy_grid")
         except Exception as e:
             print(f"Error in display_expenses: {str(e)}")
