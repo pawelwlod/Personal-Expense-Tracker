@@ -16,7 +16,7 @@ def main_menu(is_online):
         try:
             os.system('cls' if os.name == 'nt' else 'clear')
             title = pyfiglet.figlet_format("Personal Expense Tracker")
-            print(Fore.BLUE+title)
+            print(Fore.GREEN+title)
 
             print("\n1. Add Expense\n2. Display Expenses\n3. Exit")
             user_input = str(input("Choose an option: "))

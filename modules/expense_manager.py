@@ -3,9 +3,10 @@
 
 from tabulate import tabulate
 from dateutil import parser
+from datetime import datetime
 from modules import data_manager
 dm = data_manager.DataManager()
-dtm = data_manager.DateManager()
+fm = data_manager.FilterManager()
 
 class ExpenseManager:
     '''Personal Expense Tracker functions.'''
@@ -43,31 +44,43 @@ class ExpenseManager:
     def display_expenses(self):
         '''Displays all (with optional filters) expenses in a table-like form.'''
         try:
-            filters = str(input("Select a filter (Category, Date, Amount, skip for no filter): "))
+            filters = str(input("Select a filter (Category, Date, Amount, Multiple, skip for no filter): "))
             if filters.lower() == "category":
-                filter_category = str(input(f"Filter by category: ({' '.join(str(e.title()) for e in self.categories)}) "))
-                filter_list = dm.filter_data(self.expenses, "category", filter=filter_category)
+                filter_list = fm.filter_data(filters)
                 if not filter_list:
                     print("\nNo expenses matching the category.")
             
             elif filters.lower() == "date":
-                start_date, end_date = dtm.validate_date_range(input("Start date (YYYY-MM-DD): "), input("End date (YYYY-MM-DD): "))
-                if start_date is None or end_date is None:
+                start_date = datetime.strptime(input("Start date (YYYY-MM-DD): "), "%Y-%m-%d").date()
+                end_date = datetime.strptime(input("End date (YYYY-MM-DD): "), "%Y-%m-%d").date()
+                if (start_date is None or end_date is None) or (start_date > end_date):
                     print("\nInvalid date range. Please try again.")
                     return
-                filter_list = dtm.filter_date_range(self.expenses, start_date, end_date)
+                filter_list = fm.filter_date_range(start_date, end_date)
                 if not filter_list:
                     print("\nNo expenses in the date range.")
             
             elif filters.lower() == "amount":
-                start_amount, end_amount = float(input("Enter start amount: ")), float(input("Enter end amount: "))
-                if start_amount is None or end_amount is None:
-                    print("\nInvalid amount range. Please try again.")
-                    return
-                filter_list = dm.filter_data(self.expenses, "amount", start_amount=start_amount, end_amount=end_amount)
+                filter_list = fm.filter_data(filters)
                 if not filter_list:
                     print("\nNo expenses matching the amount.")
             
+            elif filters.lower() == "multiple":
+                mul_filters = []
+                for _ in range(int(input("Enter filter amount (2 or 3): "))):
+                    filter = str(input("Select a filter (Category, Date, Amount): ")).lower()
+                    if filter in ["category", "date", "amount"]:
+                        mul_filters.append(filter)
+                    else:
+                        print("\nUnavailable filter.")
+                
+                filter_list = fm.filter_multiple(mul_filters)
+                if not filter_list:
+                    print("\nNo expenses matching given filters.")
+            
+            elif filters:
+                return "\nInvalid filter."
+
             else:
                  filter_list = self.expenses
 
