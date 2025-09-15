@@ -63,5 +63,12 @@
         "date": "2025-09-14",
         "amount": 6.0,
         "category": "Games"
+    },
+    "13": {
+        "date": "2025-09-14",
+        "amount": 70.0,
+        "category": "Entertainments",
+        "Total Amount Spent": null,
+        "Total Expenses": null
     }
 }

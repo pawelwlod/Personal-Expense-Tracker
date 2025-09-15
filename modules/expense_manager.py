@@ -24,7 +24,7 @@ class ExpenseManager:
                         if category.lower() in self.categories:
                             if category.lower() == 'custom':
                                 category = str(input("Enter custom category: ")).title()
-                            self.expenses[(len(self.expenses))] = {"date": date, "amount": float(amount), "category": category.title()}
+                            self.expenses[(len(self.expenses))] = {"date": date, "amount": float(amount), "category": category.title(), "Total Amount Spent": None, "Total Expenses": None}
                             dm.save_data(self.expenses)
 
                             print(f"\nAdded new expense for {date}: £{float(amount)} , {category.title()}")
