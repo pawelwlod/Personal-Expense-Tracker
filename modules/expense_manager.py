@@ -9,7 +9,7 @@ dm = data_manager.DataManager()
 fm = filter_manager.FilterManager()
 
 class ExpenseManager:
-    '''Personal Expense Tracker functions.'''
+    '''Manages expenses for Personal Expense Tracker.'''
     def __init__(self):
         '''Initialise ExpenseManager.'''
         self.expenses = dm.load_data("expenses", {})

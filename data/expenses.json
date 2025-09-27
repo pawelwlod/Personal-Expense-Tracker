@@ -78,5 +78,10 @@
         "date": "2025-09-25",
         "amount": 35.0,
         "category": "Food"
+    },
+    "16": {
+        "date": "2025-09-26",
+        "amount": 45.0,
+        "category": "Utilities"
     }
 }
