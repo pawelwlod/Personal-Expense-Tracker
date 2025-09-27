@@ -24,7 +24,7 @@ class ExpenseManager:
                         if category.lower() in self.categories:
                             if category.lower() == 'custom':
                                 category = str(input("Enter custom category: ")).title()
-                            self.expenses[(len(self.expenses))] = {"date": date, "amount": float(amount), "category": category.title(), "Total Amount Spent": None, "Total Expenses": None}
+                            self.expenses[(len(self.expenses))] = {"date": date, "amount": float(amount), "category": category.title()}
                             dm.save_data(self.expenses)
 
                             print(f"\nAdded new expense for {date}: £{float(amount)} , {category.title()}")
@@ -81,8 +81,17 @@ class ExpenseManager:
             elif filters:
                 return "\nInvalid filter."
 
-            else:
-                 filter_list = self.expenses
+            else: 
+                filter_list = {}
+                for key,value in self.expenses.items():
+                    filter_list[key] = value
+
+            total_spent, total_expenses = float(0), 0
+            for _,b in filter_list.items():
+                total_spent += b["amount"]
+                total_expenses += 1
+            
+            filter_list[len(filter_list)] = {"Total Amount Spent": total_spent, "Total Expenses": total_expenses}
 
             return tabulate(filter_list.values(), headers="keys", tablefmt="fancy_grid")
         except Exception as e:
