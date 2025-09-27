@@ -6,9 +6,10 @@ import os
 import pyfiglet
 from colorama import Fore
 from datetime import datetime
-from modules import expense_manager, data_manager
+from modules import expense_manager, data_manager, budget_manager
 em = expense_manager.ExpenseManager()
 dm = data_manager.DataManager()
+bm = budget_manager.BudgetManager()
 
 def main_menu(is_online):
     '''The main menu for the Personal Expense Tracker.'''
@@ -58,7 +59,7 @@ def exit(is_online):
     '''Exits Expense Tracker.'''
     
     print("Exiting...")
-    dm.save_data(em.expenses)
+    dm.save_data("expenses", em.expenses)
     print("\nExpenses Saved!")
 
     is_online = False

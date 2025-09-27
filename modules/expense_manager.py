@@ -4,15 +4,15 @@
 from tabulate import tabulate
 from dateutil import parser
 from datetime import datetime
-from modules import data_manager
+from modules import data_manager, filter_manager
 dm = data_manager.DataManager()
-fm = data_manager.FilterManager()
+fm = filter_manager.FilterManager()
 
 class ExpenseManager:
     '''Personal Expense Tracker functions.'''
     def __init__(self):
         '''Initialise ExpenseManager.'''
-        self.expenses = dm.load_data({})
+        self.expenses = dm.load_data("expenses", {})
         self.categories = ['food', 'transport', 'entertainments', 'utilities', 'custom']
     
     def add_expense(self, amount, category, date):
@@ -25,7 +25,7 @@ class ExpenseManager:
                             if category.lower() == 'custom':
                                 category = str(input("Enter custom category: ")).title()
                             self.expenses[(len(self.expenses))] = {"date": date, "amount": float(amount), "category": category.title()}
-                            dm.save_data(self.expenses)
+                            dm.save_data("expenses", self.expenses)
 
                             print(f"\nAdded new expense for {date}: £{float(amount)} , {category.title()}")
                         else:
