@@ -94,7 +94,7 @@ class MainMenu:
                         if budget_limit.lower() == 'exit':
                             continue
                         
-                        # TODO: IMPLEMENT ADD_BUDGET
+                        bm.add_budget(budget_name, budget_limit)
                         time.sleep(3)
                     
                     elif (budget_user_input == '2') or (budget_user_input.lower() == 'edit budget'):
@@ -103,11 +103,11 @@ class MainMenu:
                         if budget_name.lower() == 'exit':
                             continue
 
-                        # TODO: IMPLEMENT EDIT_BUDGET
+                        bm.edit_budget(budget_name)
                         time.sleep(3)
                     
                     elif (budget_user_input == '3') or (budget_user_input.lower() == 'display budgets'):
-                        # TODO: IMPLEMENT DISPLAY_BUDGETS
+                        print(bm.display_budgets())
                         time.sleep(5)
                     
                     elif (budget_user_input == '4') or (budget_user_input.lower() == 'delete budget'):
@@ -116,7 +116,7 @@ class MainMenu:
                         if budget_name.lower() == 'exit':
                             continue
 
-                        # TODO: IMPLEMENT DELETE_BUDGET
+                        bm.delete_budget(budget_name)
                         time.sleep(3)
 
                     elif (budget_user_input == '5') or (budget_user_input.lower() == 'exit'):

@@ -31,7 +31,7 @@ if __name__ == '__main__' and is_online:
                 is_online = False if mm.expenses_main_menu() == "false" else True
             
             elif (user_input == "2") or (user_input.lower() == "budgets"):
-               is_online = False if mm.budgets_main_menu() == "false" else True
+                is_online = False if mm.budgets_main_menu() == "false" else True
 
             elif (user_input == "3") or (user_input.lower() == "exit"):
                 print("Exiting...")
