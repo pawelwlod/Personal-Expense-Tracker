@@ -93,17 +93,28 @@ class MainMenu:
                         budget_limit = str(input("Enter budget limit: "))
                         if budget_limit.lower() == 'exit':
                             continue
+                        budget_period = str(input("Enter budget period: (Weekly, Monthly, Yearly) "))
+                        if budget_period.lower() == 'exit':
+                            continue
                         
-                        bm.add_budget(budget_name, budget_limit)
+                        bm.add_budget(budget_name, budget_limit, budget_period)
                         time.sleep(3)
                     
                     elif (budget_user_input == '2') or (budget_user_input.lower() == 'edit budget'):
                         print("\nSend 'exit' in any of the fields to cancel.")
-                        budget_name = str(input("Enter budget name: ")).strip()
-                        if budget_name.lower() == 'exit':
+                        choice = str(input("Would you like to edit the name or period?: "))
+                        name, value = str(input("Enter budget name: ")).strip()
+                        if name.lower() == 'exit':
+                            continue
+                        if choice.lower() == 'period':
+                            value = str(input("Enter budget period: "))
+                            if value.lower() == 'exit':
+                                continue
+                        else:
+                            print("Enter a valid option!")
                             continue
 
-                        bm.edit_budget(budget_name)
+                        bm.edit_budget(choice, name, value)
                         time.sleep(3)
                     
                     elif (budget_user_input == '3') or (budget_user_input.lower() == 'display budgets'):

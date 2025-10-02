@@ -13,31 +13,32 @@ class BudgetManager:
         self.budgets = dm.load_data("budgets", {})
         self.default_categories = em.categories
 
-    def add_budget(self, name, limit):
+    def add_budget(self, name, limit, period):
         '''Adds new budget to Personal Expense Tracker.'''
         try:
-            if name and limit:
+            if name and limit and period:
                 if name.title() not in self.budgets.keys():
                     if float(limit) > 0:
-                        self.budgets[name.title()] = {"name": name.title(), "limit": float(limit), "spent": 0}
+                        self.budgets[name.title()] = {"name": name.title(), "limit": float(limit), "period": period.title(), "spent": 0}
                         dm.save_data("budgets", self.budgets)
 
-                        print(f"\nAdded new budget for {name.title()}: £{float(limit)}")
+                        print(f"\nAdded new budget for {name.title()}: £{float(limit)}, {period.title()}")
                     else:
                         print("Budget limit needs to be more than 0.")
                 else:
                     print(f"{name.title()} is already has a set budget.")
             else:
-                print("Budget name and limit need to be inputted!")
+                print("Budget name, limit, and period need to be inputted!")
         except Exception as e:
             print(f"Error in add_budget: {str(e)}")
 
-    def edit_budget(self, name):
+    def edit_budget(self, choice, name, value):
         '''Edits existing budget in Personal Expense Tracker.'''
         try:
-            if name:
+            if choice and name and value:
                 if name.title() in self.budgets.keys():
-                    print(f"\n{name} : £{self.budgets[name.title()]["limit"]}")
+                    if choice.lower() == 'name':
+                        print(f"\n{name} : £{self.budgets[name.title()]["limit"]}, {self.budgets[name.title()]['period']}")
                     edit_choice = str(input("Update budget to: "))
                     self.budgets[name.title()]["limit"] = float(edit_choice)
                     dm.save_data("budgets", self.budgets)

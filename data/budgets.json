@@ -1,22 +1,8 @@
 {
-    "Transport": {
-        "name": "Transport",
-        "limit": 120.0,
-        "spent": 0
-    },
-    "Utilities": {
-        "name": "Utilities",
-        "limit": 100.0,
-        "spent": 0
-    },
-    "Gaming": {
-        "name": "Gaming",
-        "limit": 150.0,
-        "spent": 0
-    },
     "Food": {
         "name": "Food",
-        "limit": 250.0,
+        "limit": 200.0,
+        "period": "Monthly",
         "spent": 0
     }
 }
