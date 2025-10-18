@@ -23,12 +23,9 @@ class BudgetManager:
                         dm.save_data("budgets", self.budgets)
 
                         print(f"\nAdded new budget for {name.title()}: £{float(limit)}, {period.title()}")
-                    else:
-                        print("Budget limit needs to be more than 0.")
-                else:
-                    print(f"{name.title()} is already has a set budget.")
-            else:
-                print("Budget name, limit, and period need to be inputted!")
+                    else: print("Budget limit needs to be more than 0.")
+                else: print(f"{name.title()} is already has a set budget.")
+            else: print("Budget name, limit, and period need to be inputted!")
         except Exception as e:
             print(f"Error in add_budget: {str(e)}")
 
@@ -37,17 +34,18 @@ class BudgetManager:
         try:
             if choice and name and value:
                 if name.title() in self.budgets.keys():
-                    if choice.lower() == 'name':
-                        print(f"\n{name} : £{self.budgets[name.title()]["limit"]}, {self.budgets[name.title()]['period']}")
-                    edit_choice = str(input("Update budget to: "))
-                    self.budgets[name.title()]["limit"] = float(edit_choice)
+                    print(f"\n{name.title()} : £{self.budgets[name.title()]["limit"]}, {self.budgets[name.title()]['period']}")
+                    
+                    if choice.lower() == 'amount':
+                        self.budgets[name.title()]["limit"] = float(value)
+                        print(f"Budget amount for {name.title()} edited to: £{value}")
+                    elif choice.lower() == 'period':
+                        self.budgets[name.title()]["period"] = str(value.title())
+                        print(f"Budget period for {name.title()} edited to: {value.title()}")
+                    
                     dm.save_data("budgets", self.budgets)
-
-                    print(f"Budget for {name.title()} edited to: £{edit_choice}")
-                else:
-                    print(f"{name.title()} doesn't have a set budget.")
-            else:
-                print("Budget name must be inputted!")
+                else: print(f"{name.title()} doesn't have a set budget.")
+            else: print("Budget name must be inputted!")
         except Exception as e:
             print(f"Error in edit_budget: {str(e)}")
 
@@ -61,10 +59,8 @@ class BudgetManager:
                     if name.title() == key:
                         list[name.title()] = values
                         return tabulate(list.values(), headers="keys", tablefmt="fancy_grid")
-                else:
-                    return f"{name.title()} not found in budgets."
-            else:
-                return tabulate(self.budgets.values(), headers="keys", tablefmt="fancy_grid")
+                else: return f"{name.title()} not found in budgets."
+            else: return tabulate(self.budgets.values(), headers="keys", tablefmt="fancy_grid")
         except Exception as e:
             print(f"Error in display_budgets: {str(e)}")
 
@@ -79,11 +75,8 @@ class BudgetManager:
                         dm.save_data("budgets", self.budgets)
 
                         print(f"Budget for {name.title()} has been deleted.")
-                    else:
-                        print("Deletion cancelled.")
-                else:
-                    print(f"{name.title()} not found in budgets.")
-            else:
-                print("Budget name must be inputted!")
+                    else: print("Deletion cancelled.")
+                else: print(f"{name.title()} not found in budgets.")
+            else: print("Budget name must be inputted!")
         except Exception as e:
             print(f"Error in delete_budget: {str(e)}")

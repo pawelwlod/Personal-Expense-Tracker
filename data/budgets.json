@@ -1,8 +1,8 @@
 {
     "Food": {
         "name": "Food",
-        "limit": 200.0,
-        "period": "Monthly",
+        "limit": 100.0,
+        "period": "yearly",
         "spent": 0
     }
 }
