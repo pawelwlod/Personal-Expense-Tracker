@@ -6,10 +6,10 @@ import time
 import pyfiglet
 from colorama import Fore
 from modules import main_menu, data_manager, expense_manager, budget_manager
-mm = main_menu.MainMenu()
 dm = data_manager.DataManager()
-em = expense_manager.ExpenseManager()
-bm = budget_manager.BudgetManager()
+em = expense_manager.ExpenseManager(dm)
+bm = budget_manager.BudgetManager(dm, em)
+mm = main_menu.MainMenu(dm, em, bm)
 
 is_online = True
 

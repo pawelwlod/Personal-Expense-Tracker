@@ -2,16 +2,14 @@
 '''Budget Manager'''
 
 from tabulate import tabulate
-from modules import data_manager, expense_manager
-dm = data_manager.DataManager()
-em = expense_manager.ExpenseManager()
 
 class BudgetManager:
     '''Manages budgets for Personal Expense Tracker'''
-    def __init__(self):
+    def __init__(self, dm, em):
         '''Initialise BudgetManager.'''
-        self.budgets = dm.load_data("budgets", {})
-        self.default_categories = em.categories
+        self.dm = dm; self.em = em
+        self.budgets = self.dm.load_data("budgets", {})
+        self.default_categories = self.em.categories
 
     def add_budget(self, name, limit, period):
         '''Adds new budget to Personal Expense Tracker.'''
@@ -20,7 +18,7 @@ class BudgetManager:
                 if name.title() not in self.budgets.keys():
                     if float(limit) > 0:
                         self.budgets[name.title()] = {"name": name.title(), "limit": float(limit), "period": period.title(), "spent": 0}
-                        dm.save_data("budgets", self.budgets)
+                        self.dm.save_data("budgets", self.budgets)
 
                         print(f"\nAdded new budget for {name.title()}: £{float(limit)}, {period.title()}")
                     else: print("Budget limit needs to be more than 0.")
@@ -43,7 +41,7 @@ class BudgetManager:
                         self.budgets[name.title()]["period"] = str(value.title())
                         print(f"Budget period for {name.title()} edited to: {value.title()}")
                     
-                    dm.save_data("budgets", self.budgets)
+                    self.dm.save_data("budgets", self.budgets)
                 else: print(f"{name.title()} doesn't have a set budget.")
             else: print("Budget name must be inputted!")
         except Exception as e:
@@ -72,7 +70,7 @@ class BudgetManager:
                     confirmation = str(input(f"\nAre you sure you want to delete your budget for {name.title()}? (Y/N) "))
                     if confirmation.lower() == "y":
                         del self.budgets[name.title()]
-                        dm.save_data("budgets", self.budgets)
+                        self.dm.save_data("budgets", self.budgets)
 
                         print(f"Budget for {name.title()} has been deleted.")
                     else: print("Deletion cancelled.")

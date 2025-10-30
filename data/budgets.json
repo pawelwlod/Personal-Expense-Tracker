@@ -2,7 +2,13 @@
     "Food": {
         "name": "Food",
         "limit": 100.0,
-        "period": "yearly",
+        "period": "Yearly",
+        "spent": 0
+    },
+    "Transport": {
+        "name": "Transport",
+        "limit": 150.0,
+        "period": "Weekly",
         "spent": 0
     }
 }
