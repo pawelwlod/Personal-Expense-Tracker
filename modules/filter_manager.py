@@ -2,15 +2,14 @@
 '''Filter Manager'''
 
 from datetime import datetime
-from modules import data_manager
-dm = data_manager.DataManager()
 
 class FilterManager:
     '''Manages expense filtering for Personal Expense Tracker.'''
-    def __init__(self):
+    def __init__(self, dm):
         '''Initialise FilterManager.'''
+        self.dm         = dm
         self.categories = ['food', 'transport', 'entertainments', 'utilities', 'custom']
-        self.expenses = dm.load_data(type="expenses", default={})
+        self.expenses   = self.dm.load_data(type="expenses", default={})
 
     def filter_data(self, type):
         '''Filters expenses by either a category or amount range.'''
@@ -60,8 +59,8 @@ class FilterManager:
                 if filter != 'date':
                     filtered_list = FilterManager.filter_data(self=self, type=filter)                   
                 else:
-                    start_date = datetime.strptime(input("Start date (YYYY-MM-DD): "), "%Y-%m-%d").date()
-                    end_date = datetime.strptime(input("End date (YYYY-MM-DD): "), "%Y-%m-%d").date()
+                    start_date    = datetime.strptime(input("Start date (YYYY-MM-DD): "), "%Y-%m-%d").date()
+                    end_date      = datetime.strptime(input("End date (YYYY-MM-DD): "), "%Y-%m-%d").date()
                     filtered_list = FilterManager.filter_date_range(self, start_date, end_date)
                     
                 if not temp_expenses:

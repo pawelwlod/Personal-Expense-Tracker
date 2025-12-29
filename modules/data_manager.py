@@ -7,7 +7,7 @@ class DataManager:
     '''Manages expense and budget data for Personal Expense Tracker.'''
     def __init__(self):
         self.expense_file_name = 'data/expenses.json'
-        self.budget_file_name = 'data/budgets.json'
+        self.budget_file_name  = 'data/budgets.json'
 
     def save_data(self, type, data):
         '''Save data to file'''

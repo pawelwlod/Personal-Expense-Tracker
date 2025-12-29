@@ -83,5 +83,50 @@
         "date": "2025-09-26",
         "amount": 45.0,
         "category": "Utilities"
+    },
+    "17": {
+        "date": "2025-12-10",
+        "amount": 30.0,
+        "category": "Transport"
+    },
+    "18": {
+        "date": "2025-12-18",
+        "amount": 12.0,
+        "category": "Utilities"
+    },
+    "19": {
+        "date": "2025-12-12",
+        "amount": 15.0,
+        "category": "Transport"
+    },
+    "20": {
+        "date": "2025-12-19",
+        "amount": 85.0,
+        "category": "Transport"
+    },
+    "21": {
+        "date": "2025-12-10",
+        "amount": 42.0,
+        "category": "Utilities"
+    },
+    "22": {
+        "date": "2025-12-24",
+        "amount": 100.0,
+        "category": "Entertainments"
+    },
+    "23": {
+        "date": "2025-12-29",
+        "amount": 10.0,
+        "category": "Food"
+    },
+    "24": {
+        "date": "2025-12-29",
+        "amount": 5.0,
+        "category": "Entertainments"
+    },
+    "25": {
+        "date": "2025-12-29",
+        "amount": 20.0,
+        "category": "Entertainments"
     }
 }

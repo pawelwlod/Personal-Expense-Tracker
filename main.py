@@ -1,30 +1,20 @@
 # main.py
 '''Main file for Personal Expense Tracker'''
 
-import os
 import time
-import pyfiglet
-from colorama import Fore
-from modules import main_menu, data_manager, expense_manager, budget_manager
-dm = data_manager.DataManager()
-em = expense_manager.ExpenseManager(dm)
-bm = budget_manager.BudgetManager(dm, em)
-mm = main_menu.MainMenu(dm, em, bm)
+from modules import main_menu, data_manager, expense_manager, budget_manager, filter_manager, utils
+utils = utils.Utils()
+dm    = data_manager.DataManager()
+fm    = filter_manager.FilterManager(dm)
+bm    = budget_manager.BudgetManager(dm, fm, utils)
+em    = expense_manager.ExpenseManager(dm, fm, bm)
+mm    = main_menu.MainMenu(dm, em, bm, utils)
 
 is_online = True
 
-def header():
-    '''Header for Personal Expense Tracker.'''
-    try:
-        os.system('cls' if os.name == 'nt' else 'clear')
-        title = pyfiglet.figlet_format("Personal Expense Tracker")
-        print(Fore.GREEN+title)
-    except Exception as e:
-        print(f"Error in header: {str(e)}")
-
 while __name__ == '__main__' and is_online:
     try: 
-        header(); print("\n1. Expenses\n2. Budgets\n3. Exit")
+        utils.header(); print("\n1. Expenses\n2. Budgets\n3. Exit")
         user_input = str(input("Choose an option: "))
         if user_input:
             if (user_input == "1") or (user_input.lower() == "expenses"):
@@ -35,10 +25,13 @@ while __name__ == '__main__' and is_online:
 
             elif (user_input == "3") or (user_input.lower() == "exit"):
                 print("Exiting...")
-                dm.save_data("expenses", em.expenses); print("\nExpenses Saved!")
+                dm.save_data("expenses", em.expenses)
+                print("\nExpenses Saved!")
 
-                dm.save_data("budgets", bm.budgets); print("\nBudgets Saved!")
+                dm.save_data("budgets", bm.budgets)
+                print("\nBudgets Saved!")
                 is_online = False
-            else: print("Invalid input!"); time.sleep(3)
+            else: 
+                print("Invalid input!"); time.sleep(3)
     except Exception as e:
         print(f"Error in main file: {str(e)}")

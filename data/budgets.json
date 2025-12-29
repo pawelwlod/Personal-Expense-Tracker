@@ -1,14 +1,30 @@
 {
-    "Food": {
-        "name": "Food",
-        "limit": 100.0,
-        "period": "Yearly",
-        "spent": 0
-    },
     "Transport": {
         "name": "Transport",
         "limit": 150.0,
         "period": "Weekly",
-        "spent": 0
+        "spent": 0,
+        "remaining": 150.0
+    },
+    "Entertainments": {
+        "name": "Entertainments",
+        "limit": 50.0,
+        "period": "Weekly",
+        "spent": 25.0,
+        "remaining": 25.0
+    },
+    "Utilities": {
+        "name": "Utilities",
+        "limit": 100.0,
+        "period": "Monthly",
+        "spent": 54.0,
+        "remaining": 46.0
+    },
+    "Food": {
+        "name": "Food",
+        "limit": 150.0,
+        "period": "Yearly",
+        "spent": 45.0,
+        "remaining": 105.0
     }
 }

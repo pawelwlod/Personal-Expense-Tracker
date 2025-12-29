@@ -1,32 +1,23 @@
 # main_menu.py
 '''Main Menu'''
 
-import os
-import pyfiglet
-from colorama import Fore
 import time
 from datetime import datetime
 
 class MainMenu:
     '''Main Menu for Personal Expense Tracker.'''
-    def __init__(self, dm, em, bm):
+    def __init__(self, dm, em, bm, utils):
         '''Initialises MainMenu.'''
-        self.dm = dm; self.em = em; self.bm = bm
-
-    def header(self):
-        '''Header for Personal Expense Tracker.'''
-        try:
-            os.system('cls' if os.name == 'nt' else 'clear')
-            title = pyfiglet.figlet_format("Personal Expense Tracker")
-            print(Fore.GREEN+title)
-        except Exception as e:
-            print(f"Error in header: {str(e)}")
+        self.dm    = dm
+        self.em    = em
+        self.bm    = bm
+        self.utils = utils
 
     def expenses_main_menu(self):
         '''The expense main menu for the Personal Expense Tracker.'''
         while True:
             try:
-                self.header()
+                self.utils.header()
                 print("\n1. Add Expense\n2. Display Expenses\n3. Exit")
                 expense_user_input = str(input("Choose an option: "))
 
@@ -34,23 +25,29 @@ class MainMenu:
                     if (expense_user_input == '1') or (expense_user_input.lower() == 'add expense'):
                         print("\nSend 'exit' in any of the fields to cancel.")
                         date = str(input("Enter date (YYYY-MM-DD): ")).strip()
-                        if date == 'exit': continue
+                        if date == 'exit': 
+                            continue
                         try:
                             parsed_date = datetime.strptime(date, "%Y-%m-%d").date()
                         except ValueError:
                             print("Invalid date format. Please enter the date in YYYY-MM-DD format or type 'exit' to return.")
+                        
                         amount = str(input("Enter expense amount (format: £0.00): "))
                         if amount == 'exit': continue
+                        
                         category = str(input(f"Enter category ({' '.join(str(e.title()) for e in self.em.categories)}): "))
                         if category == 'exit': continue
+                        
                         self.em.add_expense(amount=amount, category=category, date=str(parsed_date)); time.sleep(3)
 
                     elif (expense_user_input == '2') or (expense_user_input.lower() == 'display expenses'):
                         print(self.em.display_expenses()); time.sleep(5)
 
-                    elif (expense_user_input.lower() == 'exit') or (expense_user_input == '3'): return "true"
+                    elif (expense_user_input.lower() == 'exit') or (expense_user_input == '3'): 
+                        return "true"
 
-                    else: print(f"Invalid input! Please try again."); time.sleep(3)
+                    else: 
+                        print(f"Invalid input! Please try again."); time.sleep(3)
             except Exception as e:
                 print(f"Error in expenses_main_menu: {str(e)}")
     
@@ -58,7 +55,7 @@ class MainMenu:
         '''The budget main menu for the Personal Expense Tracker.'''
         while True:
             try:
-                self.header()
+                self.utils.header()
                 print("\n1. Add Budget\n2. Edit Budget\n3. Display Budgets\n4. Delete Budget\n5. Exit")
                 budget_user_input = str(input("Choose your option: "))
 
@@ -80,14 +77,17 @@ class MainMenu:
                     elif (budget_user_input == '2') or (budget_user_input.lower() == 'edit budget'):
                         print("\nSend 'exit' in any of the fields to cancel.")
                         choice = str(input("Would you like to edit the budget amount or period?: "))
-                        name = str(input("Enter budget name: ")).strip()
+                        name   = str(input("Enter budget name: ")).strip()
                         if name.lower() == 'exit': continue
+                        
                         if choice.lower() == 'period':
                             value = str(input("Enter budget period: "))
                             if value.lower() == 'exit': continue
+                        
                         elif choice.lower() == 'amount':
                             value = str(input("Enter budget amount: "))
                             if value.lower() == 'exit' : continue
+                        
                         else:
                             print("Enter a valid option!"); time.sleep(3); continue
 
@@ -103,7 +103,8 @@ class MainMenu:
 
                         self.bm.delete_budget(budget_name); time.sleep(3)
 
-                    elif (budget_user_input == '5') or (budget_user_input.lower() == 'exit'): return "true"
+                    elif (budget_user_input == '5') or (budget_user_input.lower() == 'exit'): 
+                        return "true"
                     
                     else:
                         print(f"Invalid input! Please try again."); time.sleep(3)
