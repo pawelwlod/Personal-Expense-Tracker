@@ -3,7 +3,7 @@
 
 import time
 from colorama import Fore
-from modules import main_menu, data_manager, expense_manager, budget_manager, filter_manager, utils
+from lib import main_menu, data_manager, expense_manager, budget_manager, filter_manager, utils
 utils = utils.Utils()
 dm    = data_manager.DataManager()
 fm    = filter_manager.FilterManager()
