@@ -131,8 +131,11 @@ class BudgetManager:
                     for expense in filtered_expenses.values():
                         if name.title() == expense["category"]:
                             amount += expense["amount"]
-                    self.budgets[name.title()]["spent"]      = amount
-                    self.budgets[name.title()]["remaining"]  = budget["limit"] - amount
+                    self.budgets[name.title()]["spent"]     = amount
+                    self.budgets[name.title()]["remaining"] = budget["limit"] - amount
+                    self.dm.save_data("budgets", self.budgets)
+                else:
+                    self.budgets[name.title()]["spent"] = 0
                     self.dm.save_data("budgets", self.budgets)
         except Exception as e:
             print(f"Error in spent_period: {str(e)}")
