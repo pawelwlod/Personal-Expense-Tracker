@@ -25,15 +25,16 @@ class ExpenseManager:
                             if category.lower() == 'custom': 
                                 category = str(input("Enter custom category: ")).title()
 
-                            self.expenses[(len(self.expenses))] = {"date": date, "amount": float(amount), "category": category.title()}
+                            self.expenses[(len(self.expenses))] = {
+                                "date":     date, 
+                                "amount":   float(amount), 
+                                "category": category.title()
+                            }
                             self.dm.save_data("expenses", self.expenses)
                             print(f"\nAdded new expense for {date}: £{float(amount)} , {category.title()}")
                             
                             if category.title() in self.bm.budgets.keys():
-                                self.bm.budgets[category.title()]["spent"] += float(amount)
-                                self.bm.budgets[category.title()]["remaining"] -= float(amount)
-
-                                self.dm.save_data("budgets", self.bm.budgets)
+                                self.bm.spent_period(self.expenses)
                                 print(f"Added £{float(amount)} to {category.title()} spent amount.")
                                 print(f"£{self.bm.budgets[category.title()]["remaining"]} remaining.")
                         else: 
@@ -54,7 +55,7 @@ class ExpenseManager:
         try:
             filters = str(input("Select a filter (Category, Date, Amount, Multiple, skip for no filter): "))
             if filters.lower() == "category":
-                filter_list = self.fm.filter_data(filters)
+                filter_list = self.fm.filter_data(filters, self.expenses)
                 if not filter_list: 
                     print("\nNo expenses matching the category.")
             
@@ -64,12 +65,12 @@ class ExpenseManager:
                 if (start_date is None or end_date is None) or (start_date > end_date):
                     print("\nInvalid date range. Please try again.")
                     return
-                filter_list = self.fm.filter_date_range(start_date, end_date)
+                filter_list = self.fm.filter_date_range(start_date, end_date, self.expenses)
                 if not filter_list: 
                     print("\nNo expenses in the date range.")
             
             elif filters.lower() == "amount":
-                filter_list = self.fm.filter_data(filters)
+                filter_list = self.fm.filter_data(filters, self.expenses)
                 if not filter_list: 
                     print("\nNo expenses matching the amount.")
             
@@ -82,7 +83,7 @@ class ExpenseManager:
                     else: 
                         print("\nUnavailable filter.")
                 
-                filter_list = self.fm.filter_multiple(mul_filters)
+                filter_list = self.fm.filter_multiple(mul_filters, self.expenses)
                 if not filter_list: 
                     print("\nNo expenses matching given filters.")
             

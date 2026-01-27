@@ -22,9 +22,8 @@ class BudgetManager:
                 budget_limit  = str(input("Enter budget limit: "))
                 budget_period = str(input("Enter budget period: (Weekly, Monthly, Yearly) "))
                 
-                self.add_budget(category, budget_limit, budget_period); time.sleep(3)
-        
-        self.spent_period()
+                self.add_budget(category, budget_limit, budget_period); 
+                time.sleep(3)
 
     def add_budget(self, name, limit, period):
         '''Adds new budget to Personal Expense Tracker.'''
@@ -32,7 +31,14 @@ class BudgetManager:
             if name and limit and period:
                 if name.title() not in self.budgets.keys():
                     if float(limit) > 0:
-                        self.budgets[name.title()] = {"name": name.title(), "limit": float(limit), "period": period.title(), "spent": 0, "remaining": float(limit)}
+                        self.budgets[name.title()] = {
+                            "name":      name.title(), 
+                            "limit":     float(limit), 
+                            "period":    period.title(), 
+                            "spent":     0, 
+                            "remaining": float(limit),
+                            "options":   None
+                        }
                         self.dm.save_data("budgets", self.budgets)
 
                         print(f"\nAdded new budget for {name.title()}: £{float(limit)}, {period.title()}")
@@ -104,7 +110,7 @@ class BudgetManager:
         except Exception as e:
             print(f"Error in delete_budget: {str(e)}")
 
-    def spent_period(self):
+    def spent_period(self, expenses):
         '''Calculates expense amount for each budget during its period.'''
         try:
             today = datetime.today().date()
@@ -113,29 +119,37 @@ class BudgetManager:
                 if budget["period"].lower() == "weekly":
                     start_date        = today - timedelta(days=today.weekday())
                     end_date          = start_date + timedelta(days=6)
-                    filtered_expenses = self.fm.filter_date_range(start_date, end_date)
+                    filtered_expenses = self.fm.filter_date_range(start_date, end_date, expenses)
 
                 elif budget["period"].lower() == "monthly":
                     start_date        = datetime(today.year, today.month, 1).date()
                     end_month         = datetime(today.year, today.month + 1, 1).date() if today.month != 12 else datetime(today.year + 1, 1, 1).date()
                     end_date          = end_month - timedelta(days=1)
-                    filtered_expenses = self.fm.filter_date_range(start_date, end_date)
+                    filtered_expenses = self.fm.filter_date_range(start_date, end_date, expenses)
                 
                 elif budget["period"].lower() == "yearly":
                     start_date        = datetime(today.year, 1, 1).date()
                     end_date          = datetime(today.year + 1, 1, 1).date()
-                    filtered_expenses = self.fm.filter_date_range(start_date, end_date)
+                    filtered_expenses = self.fm.filter_date_range(start_date, end_date, expenses)
 
                 if filtered_expenses:
                     amount = 0
                     for expense in filtered_expenses.values():
                         if name.title() == expense["category"]:
                             amount += expense["amount"]
+
+                    if (budget["limit"] - amount) <= 0:
+                        self.budgets[name.title()]["options"] = "alert"
+                    elif (budget["limit"] - amount) <= 10:
+                        self.budgets[name.title()]["options"] = "warn"
+
                     self.budgets[name.title()]["spent"]     = amount
                     self.budgets[name.title()]["remaining"] = budget["limit"] - amount
                     self.dm.save_data("budgets", self.budgets)
                 else:
-                    self.budgets[name.title()]["spent"] = 0
+                    self.budgets[name.title()]["spent"]     = 0
+                    self.budgets[name.title()]["remaining"] = budget["limit"]
+                    self.budgets[name.title()]["options"]   = None
                     self.dm.save_data("budgets", self.budgets)
         except Exception as e:
             print(f"Error in spent_period: {str(e)}")
