@@ -1,5 +1,5 @@
-# filter_manager.py
-'''Filter Manager'''
+# Filters.py
+'''Filters Handler'''
 
 from datetime import datetime
 

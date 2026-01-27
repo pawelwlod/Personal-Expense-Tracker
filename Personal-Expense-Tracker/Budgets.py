@@ -1,5 +1,5 @@
-# budget_manager.py
-'''Budget Manager'''
+# Budgets.py
+'''Budgets Handler'''
 
 import time
 from tabulate import tabulate

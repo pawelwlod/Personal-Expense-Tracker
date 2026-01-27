@@ -3,13 +3,13 @@
 
 import time
 from colorama import Fore
-from lib import main_menu, data_manager, expense_manager, budget_manager, filter_manager, utils
-utils = utils.Utils()
-dm    = data_manager.DataManager()
-fm    = filter_manager.FilterManager()
-bm    = budget_manager.BudgetManager(dm, fm, utils)
-em    = expense_manager.ExpenseManager(dm, fm, bm)
-mm    = main_menu.MainMenu(dm, em, bm, utils)
+import Budgets, DataHandler, Expenses, Filters, Menu, Utils
+utils = Utils.Utils()
+dm    = DataHandler.DataManager()
+fm    = Filters.FilterManager()
+bm    = Budgets.BudgetManager(dm, fm, utils)
+em    = Expenses.ExpenseManager(dm, fm, bm)
+mm    = Menu.MainMenu(dm, em, bm, utils)
 
 is_online = True
 

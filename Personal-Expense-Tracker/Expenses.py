@@ -1,5 +1,5 @@
-# expense_manager.py
-'''Expense Manager'''
+# Expenses.py
+'''Expenses Handler'''
 
 from tabulate import tabulate
 from dateutil import parser

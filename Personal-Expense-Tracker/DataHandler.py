@@ -1,13 +1,17 @@
-# data_manager.py
-'''Data Manager'''
+# DataHandler.py
+'''Data Handler'''
 
 import json
+import os
+from pathlib import Path
+
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class DataManager:
     '''Manages expense and budget data for Personal Expense Tracker.'''
     def __init__(self):
-        self.expense_file_name = 'data/expenses.json'
-        self.budget_file_name  = 'data/budgets.json'
+        self.expense_file_name = Path(CURRENT_DIR) / 'expenses.json'
+        self.budget_file_name  = Path(CURRENT_DIR) / 'budgets.json'
 
     def save_data(self, type, data):
         '''Save data to file'''
