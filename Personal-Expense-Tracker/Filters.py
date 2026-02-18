@@ -55,11 +55,11 @@ class FilterManager:
             filtered_expenses, temp_expenses, temp_expenses_2 = {}, {}, {}
             for filter in mul_filters:
                 if filter != 'date':
-                    filtered_list = self.filter_data(self=self, type=filter, expenses=expenses)                   
+                    filtered_list = self.filter_data(type=filter, expenses=expenses)                   
                 else:
                     start_date    = datetime.strptime(input("Start date (YYYY-MM-DD): "), "%Y-%m-%d").date()
                     end_date      = datetime.strptime(input("End date (YYYY-MM-DD): "), "%Y-%m-%d").date()
-                    filtered_list = self.filter_date_range(self, start_date, end_date, expenses)
+                    filtered_list = self.filter_date_range(start_date=start_date, end_date=end_date, expenses=expenses)
                     
                 if not temp_expenses:
                     for index, expense in filtered_list.items():

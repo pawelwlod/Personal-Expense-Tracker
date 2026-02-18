@@ -4,31 +4,20 @@
 import time
 from colorama import Fore
 import Budgets, DataHandler, Expenses, Filters, Menu, Utils
-utils = Utils.Utils()
 dm    = DataHandler.DataManager()
 fm    = Filters.FilterManager()
-bm    = Budgets.BudgetManager(dm, fm, utils)
+bm    = Budgets.BudgetManager(dm, fm)
 em    = Expenses.ExpenseManager(dm, fm, bm)
-mm    = Menu.MainMenu(dm, em, bm, utils)
+mm    = Menu.MainMenu(dm, em, bm)
+utils = Utils.Utils(bm)
 
 is_online = True
 
 while __name__ == '__main__' and is_online:
     try: 
-        bm.spent_period(em.expenses)
         utils.header(); 
         print("\n1. Expenses\n2. Budgets\n3. Exit")
-
-        check = False
-        for name, budget in bm.budgets.items():
-            if budget["options"] == "alert":
-                print(Fore.RED+f"\nALERT! You have passed your {name} budget: Spent - £{budget["spent"]}, Remaining - £{budget["remaining"]}")
-                check = True
-            elif budget["options"] == "warn":
-                print(Fore.YELLOW+f"\nWARNING! You are close to your {name} budget: Spent - £{budget["spent"]}, Remaining - £{budget["remaining"]}")
-                check = True
-        if not check:
-            print(Fore.CYAN+"\nNo Budget Warnings/Alerts!")
+        utils.budget_checks(em.expenses)
 
         user_input = str(input(Fore.GREEN+"\nChoose an option: "))
         if user_input:
@@ -47,6 +36,7 @@ while __name__ == '__main__' and is_online:
                 print("\nBudgets Saved!")
                 is_online = False
             else: 
-                print("Invalid input!"); time.sleep(3)
+                print("Invalid input!")
+                time.sleep(3)
     except Exception as e:
         print(f"Error in main file: {str(e)}")
