@@ -128,5 +128,20 @@
         "date": "2025-12-29",
         "amount": 20.0,
         "category": "Entertainments"
+    },
+    "26": {
+        "date": "2026-02-18",
+        "amount": 100.0,
+        "category": "Transport"
+    },
+    "27": {
+        "date": "2026-02-19",
+        "amount": 45.0,
+        "category": "Food"
+    },
+    "28": {
+        "date": "2026-02-15",
+        "amount": 95.0,
+        "category": "Entertainments"
     }
 }

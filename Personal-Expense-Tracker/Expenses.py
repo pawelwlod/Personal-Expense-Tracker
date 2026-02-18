@@ -83,7 +83,7 @@ class ExpenseManager:
                     else: 
                         print("\nUnavailable filter.")
                 
-                filter_list = self.fm.filter_multiple(mul_filters, self.expenses)
+                filter_list = self.fm.filter_multiple(mul_filters=mul_filters, expenses=self.expenses)
                 if not filter_list: 
                     print("\nNo expenses matching given filters.")
             

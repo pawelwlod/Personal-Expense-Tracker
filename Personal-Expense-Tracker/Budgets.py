@@ -4,14 +4,15 @@
 import time
 from tabulate import tabulate
 from datetime import datetime, timedelta
+import Utils
 
 class BudgetManager:
     '''Manages budgets for Personal Expense Tracker'''
-    def __init__(self, dm, fm, utils):
+    def __init__(self, dm, fm):
         '''Initialise BudgetManager.'''
         self.dm                 = dm
         self.fm                 = fm
-        self.utils              = utils
+        self.utils              = Utils.Utils(self)
         self.budgets            = self.dm.load_data("budgets", {})
         self.default_categories = ['food', 'transport', 'entertainments', 'utilities']
         
@@ -142,6 +143,8 @@ class BudgetManager:
                         self.budgets[name.title()]["options"] = "alert"
                     elif (budget["limit"] - amount) <= 10:
                         self.budgets[name.title()]["options"] = "warn"
+                    else:
+                        self.budgets[name.title()]["options"] = None
 
                     self.budgets[name.title()]["spent"]     = amount
                     self.budgets[name.title()]["remaining"] = budget["limit"] - amount
