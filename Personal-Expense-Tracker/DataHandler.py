@@ -13,7 +13,7 @@ class DataManager:
         self.expense_file_name = Path(CURRENT_DIR) / 'expenses.json'
         self.budget_file_name  = Path(CURRENT_DIR) / 'budgets.json'
 
-    def save_data(self, type, data):
+    def save_data(self, type: str, data: dict):
         '''Save data to file'''
         try:
             if type == "expenses".lower():
@@ -25,7 +25,7 @@ class DataManager:
         except Exception as e:
             print(f"Error while saving expenses: {str(e)}")
     
-    def load_data(self, type, default):
+    def load_data(self, type: str, default: dict):
         '''Load data from file'''
         try:
             if type == "expenses".lower():

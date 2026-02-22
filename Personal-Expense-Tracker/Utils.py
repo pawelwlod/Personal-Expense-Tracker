@@ -20,7 +20,7 @@ class Utils:
         except Exception as e:
             print(f"Error in header: {str(e)}")
     
-    def budget_checks(self, expenses):
+    def budget_checks(self, expenses: dict):
         '''Checks budgets and returns any relevant alerts/warning.'''
         try:
             self.bm.spent_period(expenses)

@@ -9,7 +9,7 @@ class FilterManager:
         '''Initialise FilterManager.'''
         self.categories = ['food', 'transport', 'entertainments', 'utilities', 'custom']
 
-    def filter_data(self, type, expenses):
+    def filter_data(self, type: str, expenses: dict):
         '''Filters expenses by either a category or amount range.'''
         try:
             filtered_list = {}
@@ -31,7 +31,7 @@ class FilterManager:
             print(f"Error while filtering expenses by category/amount: {str(e)}")
             return {}
 
-    def filter_date_range(self, start_date, end_date, expenses):
+    def filter_date_range(self, start_date, end_date, expenses: dict):
         '''Filters expenses by date range'''
         try:
             filtered_expenses = {}
@@ -49,7 +49,7 @@ class FilterManager:
             print(f"Error while filtering expenses by date: {str(e)}")
             return {}
     
-    def filter_multiple(self, mul_filters, expenses):
+    def filter_multiple(self, mul_filters: list, expenses: dict):
         '''Filters expenses by more than one filter.'''
         try:
             filtered_expenses, temp_expenses, temp_expenses_2 = {}, {}, {}
