@@ -15,7 +15,7 @@ class ExpenseManager:
         self.expenses   = self.dm.load_data("expenses", {})
         self.categories = ['food', 'transport', 'entertainments', 'utilities', 'custom']
     
-    def add_expense(self, amount, category, date):
+    def add_expense(self, amount: float, category: str, date: str):
         '''Adds an expense to the tracker.'''
         try:
             if amount:     

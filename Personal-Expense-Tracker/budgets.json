@@ -3,9 +3,9 @@
         "name": "Transport",
         "limit": 150.0,
         "period": "Monthly",
-        "spent": 100.0,
-        "remaining": 50.0,
-        "options": null
+        "spent": 150.0,
+        "remaining": 0.0,
+        "options": "alert"
     },
     "Entertainments": {
         "name": "Entertainments",
@@ -19,16 +19,16 @@
         "name": "Utilities",
         "limit": 100.0,
         "period": "Monthly",
-        "spent": 0,
-        "remaining": 100.0,
+        "spent": 81.0,
+        "remaining": 19.0,
         "options": null
     },
     "Food": {
         "name": "Food",
         "limit": 150.0,
-        "period": "Yearly",
-        "spent": 45.0,
-        "remaining": 105.0,
-        "options": null
+        "period": "Monthly",
+        "spent": 145.0,
+        "remaining": 5.0,
+        "options": "warn"
     }
 }

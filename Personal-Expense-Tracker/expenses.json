@@ -143,5 +143,40 @@
         "date": "2026-02-15",
         "amount": 95.0,
         "category": "Entertainments"
+    },
+    "29": {
+        "date": "2026-02-15",
+        "amount": 50.0,
+        "category": "Transport"
+    },
+    "30": {
+        "date": "2026-02-19",
+        "amount": 5.0,
+        "category": "Food"
+    },
+    "31": {
+        "date": "2026-02-19",
+        "amount": 45.0,
+        "category": "Food"
+    },
+    "32": {
+        "date": "2026-02-16",
+        "amount": 25.0,
+        "category": "Utilities"
+    },
+    "33": {
+        "date": "2026-02-12",
+        "amount": 40.0,
+        "category": "Utilities"
+    },
+    "34": {
+        "date": "2026-02-19",
+        "amount": 16.0,
+        "category": "Utilities"
+    },
+    "35": {
+        "date": "2026-02-20",
+        "amount": 50.0,
+        "category": "Food"
     }
 }

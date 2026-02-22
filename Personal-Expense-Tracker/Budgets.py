@@ -20,13 +20,13 @@ class BudgetManager:
             if category.title() not in self.budgets.keys():
                 self.utils.header()
                 print(f"\n{category.title()} is a default budget, please give it a limit and period.")
-                budget_limit  = str(input("Enter budget limit: "))
+                budget_limit  = float(input("Enter budget limit: "))
                 budget_period = str(input("Enter budget period: (Weekly, Monthly, Yearly) "))
                 
                 self.add_budget(category, budget_limit, budget_period); 
                 time.sleep(3)
 
-    def add_budget(self, name, limit, period):
+    def add_budget(self, name: str, limit: float, period: str):
         '''Adds new budget to Personal Expense Tracker.'''
         try:
             if name and limit and period:
@@ -52,7 +52,7 @@ class BudgetManager:
         except Exception as e:
             print(f"Error in add_budget: {str(e)}")
 
-    def edit_budget(self, choice, name, value):
+    def edit_budget(self, choice: str, name: str, value: str):
         '''Edits existing budget in Personal Expense Tracker.'''
         try:
             if choice and name and value:
@@ -91,7 +91,7 @@ class BudgetManager:
         except Exception as e:
             print(f"Error in display_budgets: {str(e)}")
 
-    def delete_budget(self, name):
+    def delete_budget(self, name: str):
         '''Deletes existing budget from Personal Expense Tracker.'''
         try:
             if name:
@@ -111,7 +111,7 @@ class BudgetManager:
         except Exception as e:
             print(f"Error in delete_budget: {str(e)}")
 
-    def spent_period(self, expenses):
+    def spent_period(self, expenses: dict):
         '''Calculates expense amount for each budget during its period.'''
         try:
             today = datetime.today().date()
