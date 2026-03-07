@@ -5,13 +5,14 @@ import json
 import os
 from pathlib import Path
 
-CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+CURRENT_DIR  = Path(__file__).resolve().parent
+TEST_DIR     = CURRENT_DIR.parent.parent / "tests"
 
 class DataManager:
     '''Manages expense and budget data for Personal Expense Tracker.'''
-    def __init__(self):
-        self.expense_file_name = Path(CURRENT_DIR) / 'expenses.json'
-        self.budget_file_name  = Path(CURRENT_DIR) / 'budgets.json'
+    def __init__(self, env):
+        self.expense_file_name = Path(CURRENT_DIR) / 'expenses.json' if env == "prod" else Path(TEST_DIR) / 'test_expenses.json'
+        self.budget_file_name  = Path(CURRENT_DIR) / 'budgets.json' if env == "prod" else Path(TEST_DIR) / 'test_budgets.json'
 
     def save_data(self, type: str, data: dict):
         '''Save data to file'''

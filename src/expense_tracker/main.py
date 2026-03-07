@@ -3,13 +3,19 @@
 
 import time
 from colorama import Fore
-import Budgets, DataHandler, Expenses, Filters, Menu, Utils
-dm    = DataHandler.DataManager()
-fm    = Filters.FilterManager()
-bm    = Budgets.BudgetManager(dm, fm)
-em    = Expenses.ExpenseManager(dm, fm, bm)
-mm    = Menu.MainMenu(dm, em, bm)
-utils = Utils.Utils(bm)
+import expense_tracker.budgets as budgets
+import expense_tracker.data_handler as data_handler
+import expense_tracker.expenses as expenses
+import expense_tracker.filters as filters
+import expense_tracker.menu as menu
+import expense_tracker.utils as utils
+
+dm    = data_handler.DataManager("prod")
+fm    = filters.FilterManager()
+bm    = budgets.BudgetManager(dm, fm)
+em    = expenses.ExpenseManager(dm, fm, bm)
+mm    = menu.MainMenu(dm, em, bm)
+utils = utils.Utils(bm)
 
 is_online = True
 
