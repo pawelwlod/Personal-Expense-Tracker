@@ -4,7 +4,7 @@
 import time
 from tabulate import tabulate
 from datetime import datetime, timedelta
-import Utils
+import expense_tracker.utils as utils
 
 class BudgetManager:
     '''Manages budgets for Personal Expense Tracker'''
@@ -12,7 +12,7 @@ class BudgetManager:
         '''Initialise BudgetManager.'''
         self.dm                 = dm
         self.fm                 = fm
-        self.utils              = Utils.Utils(self)
+        self.utils              = utils.Utils(self)
         self.budgets            = self.dm.load_data("budgets", {})
         self.default_categories = ['food', 'transport', 'entertainments', 'utilities']
         

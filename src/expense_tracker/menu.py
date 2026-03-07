@@ -4,7 +4,7 @@
 import time
 from datetime import datetime
 from colorama import Fore
-import Utils
+import expense_tracker.utils as utils
 
 class MainMenu:
     '''Main Menu for Personal Expense Tracker.'''
@@ -13,7 +13,7 @@ class MainMenu:
         self.dm    = dm
         self.em    = em
         self.bm    = bm
-        self.utils = Utils.Utils(bm)
+        self.utils = utils.Utils(bm)
 
     def expenses_main_menu(self):
         '''The expense main menu for the Personal Expense Tracker.'''
