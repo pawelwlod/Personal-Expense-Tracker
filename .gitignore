@@ -1,4 +1,6 @@
 .vscode/
 __pycache__/
-dev/
+*.egg-info
+.pytest_cache/
+.venv/
 *.json

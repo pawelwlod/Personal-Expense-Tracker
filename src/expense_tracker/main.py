@@ -3,12 +3,7 @@
 
 import time
 from colorama import Fore
-import expense_tracker.budgets as budgets
-import expense_tracker.data_handler as data_handler
-import expense_tracker.expenses as expenses
-import expense_tracker.filters as filters
-import expense_tracker.menu as menu
-import expense_tracker.utils as utils
+from . import budgets, data_handler, expenses, filters, menu, utils
 
 dm    = data_handler.DataManager("prod")
 fm    = filters.FilterManager()

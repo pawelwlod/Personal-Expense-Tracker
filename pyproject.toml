@@ -1,6 +1,11 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
-name = "personal-expense-tracker"
+name = "Personal Expense Tracker"
 version = "0.3.4"
+dynamic = ["version"]
 description = "Personal Expense Tracker"
 requires-python = ">=3.10"
 

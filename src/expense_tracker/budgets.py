@@ -4,7 +4,7 @@
 import time
 from tabulate import tabulate
 from datetime import datetime, timedelta
-import expense_tracker.utils as utils
+from . import utils
 
 class BudgetManager:
     '''Manages budgets for Personal Expense Tracker'''
