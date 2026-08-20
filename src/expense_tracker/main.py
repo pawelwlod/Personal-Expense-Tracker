@@ -3,7 +3,7 @@
 
 import time
 from colorama import Fore
-from . import budgets, data_handler, expenses, filters, menu, utils
+import budgets, data_handler, expenses, filters, menu, utils
 
 dm    = data_handler.DataManager("prod")
 fm    = filters.FilterManager()

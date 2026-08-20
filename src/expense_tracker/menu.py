@@ -4,7 +4,7 @@
 import time
 from datetime import datetime
 from colorama import Fore
-from . import utils
+import utils
 
 class MainMenu:
     '''Main Menu for Personal Expense Tracker.'''
