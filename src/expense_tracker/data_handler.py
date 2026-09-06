@@ -10,8 +10,8 @@ TEST_DIR     = CURRENT_DIR.parent.parent / "tests"
 class DataManager:
     '''Manages expense and budget data for Personal Expense Tracker.'''
     def __init__(self, env):
-        self.expense_file_name = Path(CURRENT_DIR) / 'expenses.json' if env == "prod" else Path(TEST_DIR) / 'test_expenses.json'
-        self.budget_file_name  = Path(CURRENT_DIR) / 'budgets.json' if env == "prod" else Path(TEST_DIR) / 'test_budgets.json'
+        self.expense_file_name = Path(CURRENT_DIR) / 'data' / 'expenses.json' if env == "prod" else Path(TEST_DIR) / 'test_expenses.json'
+        self.budget_file_name  = Path(CURRENT_DIR) / 'data' / 'budgets.json' if env == "prod" else Path(TEST_DIR) / 'test_budgets.json'
 
     def save_data(self, type: str, data: dict):
         '''Save data to file'''
