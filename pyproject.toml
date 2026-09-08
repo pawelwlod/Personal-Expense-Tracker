@@ -3,11 +3,13 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "Personal Expense Tracker"
+name = "personal-expense-tracker"
 version = "0.3.4"
-dynamic = ["version"]
 description = "Personal Expense Tracker"
 requires-python = ">=3.10"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/personal_expense_tracker"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
