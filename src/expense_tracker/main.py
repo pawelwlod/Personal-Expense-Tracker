@@ -1,8 +1,8 @@
 # main.py
 '''Main file for Personal Expense Tracker'''
 
-import time
-from colorama import Fore
+from tkinter import *
+from tkinter import ttk
 import budgets, data_handler, expenses, filters, menu, utils
 
 dm    = data_handler.DataManager("prod")
@@ -12,32 +12,55 @@ em    = expenses.ExpenseManager(dm, fm, bm)
 mm    = menu.MainMenu(dm, em, bm)
 utils = utils.Utils(bm)
 
-is_online = True
+class MainMenu:
+    def __init__(self, root):
+        self.mainframe = ttk.Frame(root)
+        root.title("Personal Expense Tracker")
+        self.mainframe.place(relx=0.5, rely=0.5, anchor="center")
 
-while __name__ == '__main__' and is_online:
-    try: 
-        utils.header(); 
-        print("\n1. Expenses\n2. Budgets\n3. Exit")
-        utils.budget_checks(em.expenses)
+        self.budget_checks = utils.budget_checks(em.expenses)
+        row = 0
 
-        user_input = str(input(Fore.GREEN+"\nChoose an option: "))
-        if user_input:
-            if (user_input == "1") or (user_input.lower() == "expenses"):
-                is_online = False if mm.expenses_main_menu() == "false" else True
-            
-            elif (user_input == "2") or (user_input.lower() == "budgets"):
-                is_online = False if mm.budgets_main_menu() == "false" else True
+        ttk.Label(
+            self.mainframe, text="Personal Expense Tracker", font=('Arial', 16)
+        ).grid(column=0, row=row)
+        row += 1
 
-            elif (user_input == "3") or (user_input.lower() == "exit"):
-                print("Exiting...")
-                dm.save_data("expenses", em.expenses)
-                print("\nExpenses Saved!")
+        for message in self.budget_checks:
+            ttk.Label(
+                self.mainframe, text=message, font=("Arial", 12)
+            ).grid(column=0, row=row)
+            row += 1
 
-                dm.save_data("budgets", bm.budgets)
-                print("\nBudgets Saved!")
-                is_online = False
-            else: 
-                print("Invalid input!")
-                time.sleep(3)
-    except Exception as e:
-        print(f"Error in main file: {str(e)}")
+        ttk.Button(
+            self.mainframe, text="Expenses", width=20, command=mm.expenses_main_menu
+        ).grid(column=0, row=row)
+        row += 1
+
+        ttk.Button(
+            self.mainframe, text="Budgets", width=20, command=mm.budgets_main_menu
+        ).grid(column=0, row=row)
+        row += 1
+
+        ttk.Button(
+            self.mainframe, text="Exit", width=20, command=self.close_application
+        ).grid(column=0, row=row)
+        row += 1
+
+        for child in self.mainframe.winfo_children():
+            child.grid_configure(padx=20, pady=20)
+
+    def close_application(self):
+        print("Exiting...")
+        dm.save_data("expenses", em.expenses)
+        print("Expenses Saved!")
+
+        dm.save_data("budgets", bm.budgets)
+        print("Budgets Saved!")
+
+        root.destroy()
+        
+root = Tk()
+root.geometry("1920x1080")
+MainMenu(root)
+root.mainloop()
