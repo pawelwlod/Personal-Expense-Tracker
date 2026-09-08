@@ -23,3 +23,19 @@ class Utils:
                 print("\nNo Budget Warnings/Alerts!")
         except Exception as e:
             print(f"Error in budget_checks: {str(e)}")
+
+    def budget_message(self, name, budget: dict):
+        '''Creates message for each relevant budget alert/warning.'''
+        try:
+            message = ''
+            if budget["options"] == "alert":
+                message = f'''ALERT! You have passed your {budget["period"]} {name} budget: 
+                Spent - £{budget["spent"]}, Remaining - £{budget["remaining"]}'''
+
+            elif budget["options"] == "warn":
+                message = f'''WARNING! You are close to your {budget["period"]} {name} budget:
+                Spent - £{budget["spent"]}, Remaining - £{budget["remaining"]}'''
+
+            return message
+        except Exception as e:
+            return f"Error in budget_message: {str(e)}"
