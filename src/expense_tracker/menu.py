@@ -19,7 +19,6 @@ class MainMenu:
         '''The expense main menu for the Personal Expense Tracker.'''
         while True:
             try:
-                self.utils.header()
                 print("\n1. Add Expense\n2. Display Expenses\n3. Exit")
                 self.utils.budget_checks(self.em.expenses)
 
@@ -27,7 +26,6 @@ class MainMenu:
 
                 if expense_user_input:
                     if (expense_user_input == '1') or (expense_user_input.lower() == 'add expense'):
-                        self.utils.header()
                         print("\nSend 'exit' in any of the fields to cancel.")
                         date = str(input("Enter date (YYYY-MM-DD): ")).strip()
                         if date == 'exit': 
@@ -49,7 +47,6 @@ class MainMenu:
                         time.sleep(3)
 
                     elif (expense_user_input == '2') or (expense_user_input.lower() == 'display expenses'):
-                        self.utils.header()
                         print(self.em.display_expenses())
                         time.sleep(5)
 
@@ -66,7 +63,6 @@ class MainMenu:
         '''The budget main menu for the Personal Expense Tracker.'''
         while True:
             try:
-                self.utils.header()
                 print("\n1. Add Budget\n2. Edit Budget\n3. Display Budgets\n4. Delete Budget\n5. Exit")
                 self.utils.budget_checks(self.em.expenses)
 
@@ -74,7 +70,6 @@ class MainMenu:
 
                 if budget_user_input:
                     if (budget_user_input == '1') or (budget_user_input.lower() == 'add budget'):
-                        self.utils.header()
                         print("\nSend 'exit' in any of the fields to cancel.")
                         
                         budget_name = str(input("Enter budget name: ")).strip()
@@ -93,7 +88,6 @@ class MainMenu:
                         time.sleep(3)
                     
                     elif (budget_user_input == '2') or (budget_user_input.lower() == 'edit budget'):
-                        self.utils.header()
                         print("\nSend 'exit' in any of the fields to cancel.")
                         choice = str(input("Would you like to edit the budget amount or period?: "))
                         if choice.lower() == 'exit':
@@ -122,12 +116,10 @@ class MainMenu:
                         time.sleep(3)
                     
                     elif (budget_user_input == '3') or (budget_user_input.lower() == 'display budgets'):
-                        self.utils.header()
                         print(self.bm.display_budgets())
                         time.sleep(5)
                     
                     elif (budget_user_input == '4') or (budget_user_input.lower() == 'delete budget'):
-                        self.utils.header()
                         print("\nSend 'exit' in any of the fields to cancel.")
                         budget_name = str(input("Enter budget name: ")).strip()
                         if budget_name.lower() == 'exit': 
