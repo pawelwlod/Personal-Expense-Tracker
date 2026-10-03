@@ -18,66 +18,55 @@ class ExpenseManager:
     def add_expense(self, amount: float, category: str, date: str):
         '''Adds an expense to the tracker.'''
         try:
-            if amount:     
-                if float(amount) > 0.00:
-                    if category:
-                        if category.lower() in self.categories:
-                            if category.lower() == 'custom': 
-                                category = str(input("Enter custom category: ")).title()
-
-                            self.expenses[(len(self.expenses))] = {
-                                "date":     date, 
-                                "amount":   float(amount), 
-                                "category": category.title()
-                            }
-                            self.dm.save_data("expenses", self.expenses)
-                            print(f"\nAdded new expense for {date}: £{float(amount)} , {category.title()}")
-                            
-                            if category.title() in self.bm.budgets.keys():
-                                self.bm.spent_period(self.expenses)
-                                print(f"Added £{float(amount)} to {category.title()} spent amount.")
-                                print(f"£{self.bm.budgets[category.title()]["remaining"]} remaining.")
-                        else: 
-                            print(f"Category {category} cant be selected.")
-                    else: 
-                        print("Expense category must be inputted!")
-                else: 
-                    print("Expense amount must be a positive number!")
-            else: 
-                print("Expense amount must be inputted!")
+            if not amount or not category or not date:
+                return "Expense detaiks must be inputted!"
+            if amount <= 0.00:
+                return "Expense amount must be a positive number!"
+            if category.lower() not in self.categories:
+                return f"Category {category} cant be selected."
+            if category.lower() == 'custom': 
+                category = str(input("Enter custom category: ")).strip().title()
+            
+            self.expenses[(len(self.expenses))] = {
+                "date":     date, 
+                "amount":   amount, 
+                "category": category
+            }
+            self.dm.save_data("expenses", self.expenses)
+            
+            if category in self.bm.budgets.keys():
+                self.bm.spent_period(self.expenses)
+                print(f"Added £{amount} to {category} spent amount.")
+                print(f"£{self.bm.budgets[category]["remaining"]} remaining.")
+            
+            return f"\nAdded new expense for {date}: £{amount} , {category}"
         except parser.ParserError:
-            print("Follow the format: YYYY-MM-DD !")
+            return "Follow the format: YYYY-MM-DD !"
         except Exception as e:
-            print(f"Error in add_expense: {str(e)}")
+            return f"Error in add_expense: {str(e)}"
     
     def display_expenses(self):
         '''Displays all (with optional filters) expenses in a table-like form.'''
         try:
-            filters = str(input("Select a filter (Category, Date, Amount, Multiple, skip for no filter): "))
-            if filters.lower() == "category":
+            filters = str(input("Select a filter (Category, Date, Amount, Multiple, skip for no filter): ")).strip().lower()
+            if filters in ['category', 'amount']:
                 filter_list = self.fm.filter_data(filters, self.expenses)
-                if not filter_list: 
-                    print("\nNo expenses matching the category.")
+                if not filter_list:
+                    return "\nNo expenses matching the filter."
             
-            elif filters.lower() == "date":
-                start_date = datetime.strptime(input("Start date (YYYY-MM-DD): "), "%Y-%m-%d").date()
-                end_date   = datetime.strptime(input("End date (YYYY-MM-DD): "), "%Y-%m-%d").date()
+            elif filters == "date":
+                start_date = datetime.strptime(input("Start date (YYYY-MM-DD): ").strip(), "%Y-%m-%d").date()
+                end_date   = datetime.strptime(input("End date (YYYY-MM-DD): ").strip(), "%Y-%m-%d").date()
                 if (start_date is None or end_date is None) or (start_date > end_date):
-                    print("\nInvalid date range. Please try again.")
-                    return
+                    return "\nInvalid date range. Please try again."
                 filter_list = self.fm.filter_date_range(start_date, end_date, self.expenses)
                 if not filter_list: 
-                    print("\nNo expenses in the date range.")
+                    return "\nNo expenses in the date range."
             
-            elif filters.lower() == "amount":
-                filter_list = self.fm.filter_data(filters, self.expenses)
-                if not filter_list: 
-                    print("\nNo expenses matching the amount.")
-            
-            elif filters.lower() == "multiple":
+            elif filters == "multiple":
                 mul_filters = []
-                for _ in range(int(input("Enter filter amount (2 or 3): "))):
-                    filter = str(input("Select a filter (Category, Date, Amount): ")).lower()
+                for _ in range(int(input("Enter filter amount (2 or 3): ").strip())):
+                    filter = str(input("Select a filter (Category, Date, Amount): ")).strip().lower()
                     if filter in ["category", "date", "amount"]: 
                         mul_filters.append(filter)
                     else: 
@@ -85,18 +74,18 @@ class ExpenseManager:
                 
                 filter_list = self.fm.filter_multiple(mul_filters=mul_filters, expenses=self.expenses)
                 if not filter_list: 
-                    print("\nNo expenses matching given filters.")
+                    return "\nNo expenses matching given filters."
             
             elif filters: 
                 return "\nInvalid filter."
 
             else: 
                 filter_list = {}
-                for key,value in self.expenses.items(): 
+                for key, value in self.expenses.items(): 
                     filter_list[key] = value
 
             total_spent, total_expenses = float(0), 0
-            for _,b in filter_list.items():
+            for _, b in filter_list.items():
                 total_spent    += b["amount"]
                 total_expenses += 1
             
