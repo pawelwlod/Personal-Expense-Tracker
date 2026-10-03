@@ -76,7 +76,7 @@ class MainMenu:
                     self.utils.header()
                     print("\nSend 'exit' in any of the fields to cancel.")
                     
-                    budget_name = str(input("Enter budget name: ")).strip()
+                    budget_name = str(input("Enter budget name: ")).strip().title()
                     if budget_name.lower() == 'exit': 
                         continue
                     
@@ -84,17 +84,17 @@ class MainMenu:
                     if budget_limit.lower() == 'exit': 
                         continue
                     
-                    budget_period = str(input("Enter budget period: (Weekly, Monthly, Yearly) ")).strip()
+                    budget_period = str(input("Enter budget period: (Weekly, Monthly, Yearly) ")).strip().title()
                     if budget_period.lower() == 'exit': 
                         continue 
                     
-                    self.bm.add_budget(budget_name, budget_limit, budget_period)
+                    print(self.bm.add_budget(budget_name, float(budget_limit), budget_period))
                     time.sleep(3)
                 
                 elif budget_user_input in ['2', 'edit budget']:
                     self.utils.header()
                     print("\nSend 'exit' in any of the fields to cancel.")
-                    choice = str(input("Would you like to edit the budget amount or period?: ")).strip().lower()
+                    choice = str(input("Would you like to edit the budget limit or period?: ")).strip().lower()
                     if choice.lower() == 'exit':
                         continue
 
@@ -102,7 +102,7 @@ class MainMenu:
                     if name.lower() == 'exit': 
                         continue
                     
-                    if choice in ['period', 'amount']:
+                    if choice in ['period', 'limit']:
                         value = str(input(f"Enter budget {choice}: ")).strip()
                         if value.lower() == 'exit':
                             continue
@@ -112,7 +112,7 @@ class MainMenu:
                         time.sleep(3)
                         continue
 
-                    self.bm.edit_budget(choice, name, value)
+                    print(self.bm.edit_budget(choice, name, value))
                     time.sleep(3)
                     
                 elif budget_user_input in ['3', 'display budgets']:
@@ -127,7 +127,7 @@ class MainMenu:
                     if budget_name.lower() == 'exit': 
                         continue
 
-                    self.bm.delete_budget(budget_name)
+                    print(self.bm.delete_budget(budget_name))
                     time.sleep(3)
                 
                 else:

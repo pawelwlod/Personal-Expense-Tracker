@@ -20,8 +20,8 @@ class BudgetManager:
             if category.title() not in self.budgets.keys():
                 self.utils.header()
                 print(f"\n{category.title()} is a default budget, please give it a limit and period.")
-                budget_limit  = float(input("Enter budget limit: "))
-                budget_period = str(input("Enter budget period: (Weekly, Monthly, Yearly) "))
+                budget_limit  = float(input("Enter budget limit: ").strip())
+                budget_period = str(input("Enter budget period: (Weekly, Monthly, Yearly) ")).strip().title()
                 
                 self.add_budget(category, budget_limit, budget_period); 
                 time.sleep(3)
@@ -29,87 +29,76 @@ class BudgetManager:
     def add_budget(self, name: str, limit: float, period: str):
         '''Adds new budget to Personal Expense Tracker.'''
         try:
-            if name and limit and period:
-                if name.title() not in self.budgets.keys():
-                    if float(limit) > 0:
-                        self.budgets[name.title()] = {
-                            "name":      name.title(), 
-                            "limit":     float(limit), 
-                            "period":    period.title(), 
-                            "spent":     0, 
-                            "remaining": float(limit),
-                            "options":   None
-                        }
-                        self.dm.save_data("budgets", self.budgets)
-
-                        print(f"\nAdded new budget for {name.title()}: £{float(limit)}, {period.title()}")
-                    else: 
-                        print("Budget limit needs to be more than 0.")
-                else: 
-                    print(f"{name.title()} is already has a set budget.")
-            else: 
-                print("Budget name, limit, and period need to be inputted!")
+            if not name or not limit or not period:
+                return "Budget name, limit, and period need to be inputted!"            
+            if name.title() in self.budgets.keys():
+                return f"{name.title()} is already has a set budget."            
+            if limit <= 0:
+                return "Budget limit needs to be more than 0."
+            
+            self.budgets[name.title()] = {
+                "name":      name, 
+                "limit":     limit, 
+                "period":    period, 
+                "spent":     0, 
+                "remaining": limit,
+                "options":   None
+            }
+            self.dm.save_data("budgets", self.budgets)
+    
+            return f"\nAdded new budget for {name.title()}: £{float(limit)}, {period.title()}"
         except Exception as e:
-            print(f"Error in add_budget: {str(e)}")
+            return f"Error in add_budget: {str(e)}"
 
     def edit_budget(self, choice: str, name: str, value: str):
         '''Edits existing budget in Personal Expense Tracker.'''
         try:
-            if choice and name and value:
-                if name.title() in self.budgets.keys():
-                    print(f"\n{name.title()} : £{self.budgets[name.title()]["limit"]}, {self.budgets[name.title()]['period']}")
-                    
-                    if choice.lower() == 'amount':
-                        self.budgets[name.title()]["limit"] = float(value)
-                        print(f"Budget amount for {name.title()} edited to: £{value}")
-                    elif choice.lower() == 'period':
-                        self.budgets[name.title()]["period"] = str(value.title())
-                        print(f"Budget period for {name.title()} edited to: {value.title()}")
-                    
-                    self.dm.save_data("budgets", self.budgets)
-                else: 
-                    print(f"{name.title()} doesn't have a set budget.")
-            else: 
-                print("Budget name must be inputted!")
+            if not choice or not name or not value:
+                return "Budget name and edit choice must be inputted!"
+            if name.title() not in self.budgets.keys():
+                return f"{name.title()} doesn't have a set budget."
+            
+            print(f"\n{name.title()} : £{self.budgets[name.title()]["limit"]}, {self.budgets[name.title()]['period']}")
+            if choice.lower() in ['limit', 'period']:
+                self.budgets[name.title()][choice.lower()] = float(value) if choice.lower() == 'limit' else str(value.title())
+                self.dm.save_data("budgets", self.budgets)
+                
+                return f"Budget {choice.lower()} for {name.title()} edited to: {f"£{value}" if choice.lower() == 'limit' else value.title()}"
+
+            return "Edit choice not limit or period!"
         except Exception as e:
-            print(f"Error in edit_budget: {str(e)}")
+            return f"Error in edit_budget: {str(e)}"
 
     def display_budgets(self):
         '''Displays all or filtered budgets.'''
         try:
-            name = str(input("Enter budget to display (empty to show all): "))
-            list = {}
-            if name:
-                for key,values in self.budgets.items():
-                    if name.title() == key:
-                        list[name.title()] = values
-                        return tabulate(list.values(), headers="keys", tablefmt="fancy_grid")
-                else: 
-                    return f"{name.title()} not found in budgets."
-            else: 
+            name = str(input("Enter budget to display (empty to show all): ")).strip().title()
+            if not name:
                 return tabulate(self.budgets.values(), headers="keys", tablefmt="fancy_grid")
+            if name in self.budgets.keys():
+                return tabulate([self.budgets[name]], headers="keys", tablefmt="fancy_grid")
+            
+            return f"{name} not found in budgets."
         except Exception as e:
             print(f"Error in display_budgets: {str(e)}")
 
     def delete_budget(self, name: str):
         '''Deletes existing budget from Personal Expense Tracker.'''
         try:
-            if name:
-                if name.title() in self.budgets.keys():
-                    confirmation = str(input(f"\nAre you sure you want to delete your budget for {name.title()}? (Y/N) "))
-                    if confirmation.lower() == "y":
-                        del self.budgets[name.title()]
-                        self.dm.save_data("budgets", self.budgets)
-
-                        print(f"Budget for {name.title()} has been deleted.")
-                    else: 
-                        print("Deletion cancelled.")
-                else: 
-                    print(f"{name.title()} not found in budgets.")
+            if not name:
+                return "Budget name must be inputted!"
+            if name.title() not in self.budgets.keys():
+                print(f"{name.title()} not found in budgets.")
+            confirmation = str(input(f"\nAre you sure you want to delete your budget for {name.title()}? (Y/N) ")).strip().lower()
+            if confirmation == "y":
+                del self.budgets[name.title()]
+                self.dm.save_data("budgets", self.budgets)
+            
+                return f"Budget for {name.title()} has been deleted."
             else: 
-                print("Budget name must be inputted!")
+                return "Deletion cancelled."
         except Exception as e:
-            print(f"Error in delete_budget: {str(e)}")
+            return f"Error in delete_budget: {str(e)}"
 
     def spent_period(self, expenses: dict):
         '''Calculates expense amount for each budget during its period.'''
