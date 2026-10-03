@@ -14,12 +14,12 @@ class FilterManager:
         try:
             filtered_list = {}
             if type.lower() == "category":
-                filter = str(input(f"Filter by category: ({' '.join(str(e.title()) for e in self.categories)}) "))
+                filter = str(input(f"Filter by category: ({' '.join(str(e.title()) for e in self.categories)}) ")).strip().title()
                 for index, expense in expenses.items():
-                    if expense['category'] == filter.title():
+                    if expense['category'] == filter:
                         filtered_list[index] = expense
             else:
-                start_amount, end_amount = float(input("Enter start amount: ")), float(input("Enter end amount: "))
+                start_amount, end_amount = float(input("Enter start amount: ").strip()), float(input("Enter end amount: ").strip())
                 for index, expense in expenses.items():
                     if start_amount < end_amount:
                         if expense['amount'] >= start_amount and expense['amount'] <= end_amount:
@@ -36,14 +36,9 @@ class FilterManager:
         try:
             filtered_expenses = {}
             for index, expense in expenses.items():
-                try:
-                    expense_date = datetime.strptime(expense["date"], "%Y-%m-%d").date()
-                    if start_date <= expense_date <= end_date:
-                        filtered_expenses[index] = expense
-                except KeyError:
-                    print(f"Skipping expense at index {index}: Missing 'date' field.")
-                except ValueError:
-                    print(f"Skipping expense at index {index}: Invalid date format.")
+                expense_date = datetime.strptime(expense["date"], "%Y-%m-%d").date()
+                if start_date <= expense_date <= end_date:
+                    filtered_expenses[index] = expense
             return filtered_expenses
         except Exception as e:
             print(f"Error while filtering expenses by date: {str(e)}")
@@ -57,10 +52,11 @@ class FilterManager:
                 if filter != 'date':
                     filtered_list = self.filter_data(type=filter, expenses=expenses)                   
                 else:
-                    start_date    = datetime.strptime(input("Start date (YYYY-MM-DD): "), "%Y-%m-%d").date()
-                    end_date      = datetime.strptime(input("End date (YYYY-MM-DD): "), "%Y-%m-%d").date()
+                    start_date    = datetime.strptime(input("Start date (YYYY-MM-DD): ").strip(), "%Y-%m-%d").date()
+                    end_date      = datetime.strptime(input("End date (YYYY-MM-DD): ").strip(), "%Y-%m-%d").date()
                     filtered_list = self.filter_date_range(start_date=start_date, end_date=end_date, expenses=expenses)
-                    
+
+                # TODO: Fix this bloody mess. Surely there's a better way...          
                 if not temp_expenses:
                     for index, expense in filtered_list.items():
                         temp_expenses[index] = expense
