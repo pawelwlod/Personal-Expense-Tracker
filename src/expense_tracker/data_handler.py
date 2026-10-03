@@ -13,10 +13,10 @@ class DataManager:
         self.expense_file_name = Path(CURRENT_DIR) / 'data' / 'expenses.json' if env == "prod" else Path(TEST_DIR) / 'test_expenses.json'
         self.budget_file_name  = Path(CURRENT_DIR) / 'data' / 'budgets.json' if env == "prod" else Path(TEST_DIR) / 'test_budgets.json'
 
-    def save_data(self, type: str, data: dict):
+    def save_data(self, data_type: str, data: dict):
         '''Save data to file'''
         try:
-            if type == "expenses".lower():
+            if data_type == "expenses".lower():
                 with open(self.expense_file_name, 'w') as file:
                     json.dump(data, file, indent=4, separators=(',', ': '))
             else:
@@ -25,10 +25,10 @@ class DataManager:
         except Exception as e:
             print(f"Error while saving expenses: {str(e)}")
     
-    def load_data(self, type: str, default: dict):
+    def load_data(self, data_type: str, default: dict):
         '''Load data from file'''
         try:
-            if type == "expenses".lower():
+            if data_type == "expenses".lower():
                 with open(self.expense_file_name, 'r') as file:
                     return json.load(file)
             else:
