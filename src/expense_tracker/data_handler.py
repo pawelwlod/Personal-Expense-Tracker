@@ -7,6 +7,9 @@ from pathlib import Path
 CURRENT_DIR  = Path(__file__).resolve().parent
 TEST_DIR     = CURRENT_DIR.parent.parent / "tests"
 
+# TODO: Consider moving to PostgreSQL, or make that a separate version and keep
+# this version as JSON.
+
 class DataManager:
     '''Manages expense and budget data for Personal Expense Tracker.'''
     def __init__(self, env):

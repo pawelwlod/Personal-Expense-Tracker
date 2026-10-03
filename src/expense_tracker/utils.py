@@ -14,6 +14,7 @@ class Utils:
     def header(self):
         '''Header for Personal Expense Tracker.'''
         try:
+            # FIXME: Fix deprecated method usage.
             os.system('cls' if os.name == 'nt' else 'clear')
             title = pyfiglet.figlet_format("Personal Expense Tracker")
             print(Fore.GREEN+title)
